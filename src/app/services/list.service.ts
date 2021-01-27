@@ -9,7 +9,7 @@ export class ListService {
   private lists : List[];
   constructor() {
     this.lists = [];
-    this.lists.push(new List("tmp",[]))
+    this.lists.push(new List("Liste 1",[new Todo("Faire les courses", "- Fourme de Montbrison\n- Papier toilette\n- Morbier\n- Bulots", false), new Todo("Aller chercher les enfants à l'école", "À 16h30", true)]))
    }
 
   GetAll(){
