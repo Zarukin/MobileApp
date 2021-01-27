@@ -6,7 +6,9 @@ import { Todo } from '../models/todo';
   providedIn: 'root'
 })
 export class ListService {
-  private lists : List[];
+
+  private lists: List[];
+  
   constructor() {
     this.lists = [];
     this.lists.push(new List("Liste 1",[new Todo("Faire les courses", "- Fourme de Montbrison\n- Papier toilette\n- Morbier\n- Bulots", false), new Todo("Aller chercher les enfants à l'école", "À 16h30", true)]))
@@ -18,6 +20,13 @@ export class ListService {
 
   GetOne(id:number){
     return this.lists.find(list => list.id === id);
+  }
+
+  GetTodo(id: number) {
+    var currentList = this.lists.find((list) =>
+      list.todos.find((todo) => todo.id === id)
+    );
+    return currentList.todos.find((todo) => todo.id === id);
   }
 
   Create(list:List){

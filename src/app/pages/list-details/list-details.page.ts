@@ -31,7 +31,7 @@ export class ListDetailsPage implements OnInit {
       swipeToClose: true,
       cssClass: "my-custom-class",
       componentProps: {
-        list: this.list
+        list: this.list,
       },
     });
     return await modal.present();
@@ -39,5 +39,14 @@ export class ListDetailsPage implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.listServices.DeleteTodo(this.list, todo);
+  }
+
+  done(todoToChange: Todo, event) {
+    var isChecked = event.currentTarget.checked;
+    if (isChecked) {
+      this.list.todos.find((todo) => todo === todoToChange).isDone = true;
+    } else {
+      this.list.todos.find((todo) => todo === todoToChange).isDone = false;
+    }
   }
 }

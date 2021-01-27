@@ -10,12 +10,12 @@
 <ion-content [fullscreen]="true" [scrollEvents]="true">
   <ion-list>
     <ion-item-sliding *ngFor="let todo of list.todos">
-      <ion-item>
+      <ion-item button routerLink="/todo-details/{{todo.id}}" routerLinkActive="active">
         <ion-label>
           {{todo.name}}
           <p>{{todo.description}}</p>
         </ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="todo.isDone"></ion-checkbox>
+        <ion-checkbox slot="end" (click)="done(todo, $event)" [(ngModel)]="todo.isDone"></ion-checkbox>
       </ion-item>
       
       <ion-item-options side="end">
@@ -27,4 +27,8 @@
   </ion-list>
 </ion-content>
 
-<ion-button expand="block" size="large" (click)="presentModalTodo()">Nouvelle tâche</ion-button>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="presentModalTodo()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Détail de la tâche</ion-title>
+    <ion-buttons slot="end">
+      <ion-checkbox [(ngModel)]="todo.isDone"></ion-checkbox>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label color="tertiary">Nom</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-input (ionChange)="updateName($event)" value="{{todo.name}}"></ion-input>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label color="tertiary">Description</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-textarea (ionChange)="updateDescription($event)" rows="10" value="{{todo.description}}"></ion-textarea>
+    </ion-item>
+  </ion-list>
+</ion-content>
