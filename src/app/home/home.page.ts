@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { CreateListComponent } from "../modals/create-list/create-list.component";
@@ -16,13 +17,18 @@ export class HomePage implements OnInit {
   constructor(
     public listService: ListService,
     public modalController: ModalController,
-    public router: Router
+    public router: Router,
+    private titleService: Title
   ) {
     this.lists = listService.GetAll();
   }
 
   ngOnInit() {
     this.lists = this.listService.GetAll();
+  }
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – Mes listes");
   }
 
   async presentModalList() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { CreateTodoComponent } from "src/app/modals/create-todo/create-todo.component";
@@ -17,12 +18,17 @@ export class ListDetailsPage implements OnInit {
   constructor(
     public route: ActivatedRoute,
     public listServices: ListService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get("id"));
     this.list = this.listServices.GetOne(id);
+  }
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – " + this.list.name);
   }
 
   async presentModalTodo() {

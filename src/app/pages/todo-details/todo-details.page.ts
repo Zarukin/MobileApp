@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
@@ -11,11 +12,19 @@ import { ListService } from "src/app/services/list.service";
 export class TodoDetailsPage implements OnInit {
   public todo: Todo;
 
-  constructor(public route: ActivatedRoute, public listServices: ListService) {}
+  constructor(
+    public route: ActivatedRoute,
+    public listServices: ListService,
+    private titleService: Title
+  ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get("id"));
     this.todo = this.listServices.GetTodo(id);
+  }
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – Détail de la tâche");
   }
 
   updateDescription(e) {
