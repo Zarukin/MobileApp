@@ -12,9 +12,8 @@ import { ListService } from "src/app/services/list.service";
 })
 export class CreateTodoComponent implements OnInit {
   @Input() list: List;
-
   public todoForm: FormGroup;
-  
+
   constructor(
     public listService: ListService,
     public modalController: ModalController,

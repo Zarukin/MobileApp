@@ -77,8 +77,8 @@
       "as-needed"
     ],
     "quotemark": [
-      true,
-      "single"
+      false,
+      "double"
     ],
     "semicolon": {
       "options": [

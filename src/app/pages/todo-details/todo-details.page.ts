@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { List } from 'src/app/models/list';
-import { Todo } from 'src/app/models/todo';
-import { ListService } from 'src/app/services/list.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Todo } from "src/app/models/todo";
+import { ListService } from "src/app/services/list.service";
 
 @Component({
   selector: "app-todo-details",
@@ -15,7 +14,7 @@ export class TodoDetailsPage implements OnInit {
   constructor(public route: ActivatedRoute, public listServices: ListService) {}
 
   ngOnInit() {
-    var id = Number(this.route.snapshot.paramMap.get("id"));
+    const id = Number(this.route.snapshot.paramMap.get("id"));
     this.todo = this.listServices.GetTodo(id);
   }
 
