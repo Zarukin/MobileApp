@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, ActivatedRouteSnapshot } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { CreateTodoComponent } from "src/app/modals/create-todo/create-todo.component";
 import { List } from "src/app/models/list";
@@ -21,7 +21,7 @@ export class ListDetailsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    var id = Number(this.route.snapshot.paramMap.get("id"));
+    const id = Number(this.route.snapshot.paramMap.get("id"));
     this.list = this.listServices.GetOne(id);
   }
 
@@ -39,14 +39,5 @@ export class ListDetailsPage implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.listServices.DeleteTodo(this.list, todo);
-  }
-
-  done(todoToChange: Todo, event) {
-    var isChecked = event.currentTarget.checked;
-    if (isChecked) {
-      this.list.todos.find((todo) => todo === todoToChange).isDone = true;
-    } else {
-      this.list.todos.find((todo) => todo === todoToChange).isDone = false;
-    }
   }
 }

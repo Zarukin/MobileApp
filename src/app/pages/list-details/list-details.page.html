@@ -10,12 +10,12 @@
 <ion-content [fullscreen]="true" [scrollEvents]="true">
   <ion-list>
     <ion-item-sliding *ngFor="let todo of list.todos">
-      <ion-item button routerLink="/todo-details/{{todo.id}}" routerLinkActive="active">
-        <ion-label>
+      <ion-item button>
+        <ion-label routerLink="/todo-details/{{todo.id}}" routerLinkActive="active">
           {{todo.name}}
           <p>{{todo.description}}</p>
         </ion-label>
-        <ion-checkbox slot="end" (click)="done(todo, $event)" [(ngModel)]="todo.isDone"></ion-checkbox>
+        <ion-checkbox slot="end" [(ngModel)]="todo.isDone"></ion-checkbox>
       </ion-item>
       
       <ion-item-options side="end">
