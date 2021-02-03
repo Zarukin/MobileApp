@@ -25,3 +25,10 @@
 #container a {
   text-decoration: none;
 }
+
+ion-toggle {
+  --handle-background: #2f363d;
+  --handle-background-checked: #6e40c9;
+  --background: #d1d5da;
+  --background-checked: #3c1e70 ;
+}

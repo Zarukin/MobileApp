@@ -13,6 +13,7 @@ import { ListService } from "../services/list.service";
 })
 export class HomePage implements OnInit {
   @Input() lists: List[];
+  darkMode = false;
 
   constructor(
     public listService: ListService,
@@ -45,5 +46,13 @@ export class HomePage implements OnInit {
 
   deleteList(list: List) {
     this.listService.Delete(list);
+  }
+
+  toggleColourTheme(event) {
+    if (event.detail.checked) {
+      document.body.setAttribute("color-theme", "dark");
+    } else {
+      document.body.setAttribute("color-theme", "light");
+    }
   }
 }
