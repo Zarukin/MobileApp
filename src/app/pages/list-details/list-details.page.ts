@@ -14,7 +14,6 @@ import { ListService } from "src/app/services/list.service";
 })
 export class ListDetailsPage implements OnInit {
   public list: List;
-  public randomColour: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -26,19 +25,6 @@ export class ListDetailsPage implements OnInit {
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get("id"));
     this.list = this.listServices.GetOne(id);
-
-    const colourArray = [
-      "primary",
-      "secondary",
-      "tertiary",
-      "success",
-      "warning",
-      "danger",
-      "light",
-      "medium",
-      "dark",
-    ];
-    this.randomColour = colourArray[Math.floor(Math.random() * colourArray.length)];
   }
 
   ionViewWillEnter() {

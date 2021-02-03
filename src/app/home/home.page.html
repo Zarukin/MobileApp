@@ -1,10 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Mes listes
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mes listes</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-menu side="start" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Paramètres</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-icon name="moon" slot="start"></ion-icon>
+        <ion-label>Mode sombre</ion-label>
+        <ion-toggle color="dark"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="main"></ion-router-outlet>
 
 <ion-content [fullscreen]="true" [scrollEvents]="true">
   <ion-list>
@@ -14,7 +35,7 @@
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteList(list)" >
-          <ion-icon name="trash-outline"></ion-icon>
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -23,6 +44,6 @@
 
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button (click)="presentModalList()">
-    <ion-icon name="add-outline"></ion-icon>
+    <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

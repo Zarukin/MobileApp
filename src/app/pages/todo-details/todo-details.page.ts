@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
+import { List } from "src/app/models/list";
 import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 
@@ -11,6 +12,7 @@ import { ListService } from "src/app/services/list.service";
 })
 export class TodoDetailsPage implements OnInit {
   public todo: Todo;
+  public parentList: List;
 
   constructor(
     public route: ActivatedRoute,
@@ -20,7 +22,8 @@ export class TodoDetailsPage implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get("id"));
-    this.todo = this.listServices.GetTodo(id);
+    this.todo = this.listServices.GetTodo(id).todo;
+    this.parentList = this.listServices.GetTodo(id).currentList;
   }
 
   ionViewWillEnter() {

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color={{randomColour}}>
+  <ion-toolbar color={{list.colour}}>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -23,12 +23,12 @@
           {{todo.name}}
           <p>{{todo.description}}</p>
         </ion-label>
-        <ion-checkbox class="casaco" color={{randomColour}} slot="end" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation()"></ion-checkbox>
+        <ion-checkbox class="casaco" color={{list.colour}} slot="end" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation()"></ion-checkbox>
       </ion-item>
       
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteTodo(todo)">
-          <ion-icon name="trash-outline"></ion-icon>
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -36,7 +36,7 @@
 </ion-content>
 
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="presentModalTodo()">
-    <ion-icon name="add-outline"></ion-icon>
+  <ion-fab-button (click)="presentModalTodo()" color={{list.colour}}>
+    <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

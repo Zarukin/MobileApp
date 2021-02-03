@@ -1,11 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Nouvelle tâche</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Fermer</ion-button>
+      <form [formGroup]="todoForm" (ngSubmit)="onFormSubmit()">
+        <ion-button type="submit" fill="solid" color="success" [disabled]="!todoForm.valid">
+          Créer
+        </ion-button>
+      </form>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -21,7 +27,5 @@
       <ion-label position="floating">Description</ion-label>
       <ion-textarea type="text" rows="10" formControlName="todoDesc"></ion-textarea>
     </ion-item>
-
-    <ion-button expand="block" color="success" shape="round" type="submit" [disabled]="!todoForm.valid">Créer la tâche</ion-button>
   </form>
 </ion-content>
