@@ -1,0 +1,11 @@
+.md .casaco { // style Android
+    --border-radius: 100%;
+    --size: 30px;
+    --checkmark-width: 1px;
+    margin-right: 15px;
+    // --border-color: var(--ion-color-light);
+}
+
+.ios .casaco { // style iOS
+    margin-right: 6px;
+}
