@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mobileapp-d33a9": {
+      "hosting": {
+        "app": [
+          "mobileapp-d33a9"
+        ]
+      }
+    }
+  }
+}
