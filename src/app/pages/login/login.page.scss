@@ -1,0 +1,94 @@
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+
+ion-slides {
+  height: 100%;
+}
+
+.swiper-slide {
+  display: block;
+}
+
+.swiper-slide h2 {
+  margin-top: 2.8rem;
+}
+
+.swiper-slide img {
+  max-height: 50%;
+  max-width: 80%;
+  margin: 60px 0 40px;
+  pointer-events: none;
+}
+
+b {
+  font-weight: 500;
+}
+
+p {
+  padding: 0 40px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ion-color-step-600, #60646b);
+}
+
+p b {
+  color: var(--ion-text-color, #000000);
+}
+
+img {
+  height: 200px;
+}
+
+ion-input {
+  margin-top: 10px;
+  border-radius: 5px;
+  --padding-start: 10px !important;
+  --padding-end: 10px !important;
+}
+
+:host-context(body[color-theme="light"]) ion-input {
+  --background: rgb(240, 240, 240);
+}
+
+:host-context(body[color-theme="dark"]) ion-input {
+  --background: #1e1e1e;
+}
+
+ion-item {
+  --background-focused-opacity: 0;
+}
+
+:host-context(body[color-theme="dark"]) ion-item {
+  --background: rgba(0,0,0,0);
+}
+
+form {
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+  padding-bottom: 10%;
+}
+
+a {
+  padding: 0 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ion-color-step-600, #60646b);
+
+  position: absolute;
+  bottom: 60px;
+  // Alignement du lien horizontalement au centre
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+ion-content.ios {
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

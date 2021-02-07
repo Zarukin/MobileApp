@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <h1>Inscription</h1>
+    <p>Créez votre compte pour commencer à élaborer des listes</p>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Courriel</ion-label>
+      <ion-input inputmode="email" type="email" formControlName="email" required></ion-input>
+      <ion-text color="danger" *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched">
+        <span><small>Le courriel n'est pas valide.</small></span>
+      </ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Mot de passe</ion-label>
+      <ion-input type="password" formControlName="password" required></ion-input>
+      <ion-text color="danger" *ngIf="registerForm.controls.password.errors?.minlength && registerForm.controls.password.touched">
+        <span><small>Le mot de passe doit faire au moins 8 caractères.</small></span>
+      </ion-text>
+      <ion-text color="danger" *ngIf="registerForm.controls.password.errors?.pattern && registerForm.controls.password.touched && !registerForm.controls.password.errors?.minlength">
+        <span><small>Le mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un symbole.</small></span>
+      </ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Confirmer le mot de passe</ion-label>
+      <ion-input type="password" formControlName="confirmPassword" required></ion-input>
+      <ion-text color="danger" *ngIf="registerForm.controls.confirmPassword.errors?.mustmatch && registerForm.controls.confirmPassword.touched">
+        <span><small>Les mots de passe ne correspondent pas.</small></span>
+      </ion-text>
+    </ion-item>
+
+    <ion-button fill="clear" type="submit" [disabled]="!registerForm.valid">
+      S'enregistrer
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+
+    <a routerLink="/login" routerLinkActive="active">Vous avez déjà un compte ?</a>
+  </form>
+</ion-content>

@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-slides [options]="slideOpts" #mySlider (ionSlideReachEnd)="lockingSwipe()">
+    <ion-slide>
+      <img src="assets\icon\icon420px.png" />
+      <h1>Bienvenue</h1>
+      <p>
+        <strong>Todos</strong> est une application de liste de tâches qui vous
+        permet de rester organiser tout au long de votre journée. Une liste de
+        courses ? Des rendez-vous importants ? Vous pouvez compter sur
+        <strong>Todos</strong>
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        
+        <h1>Connexion</h1>
+        <p>Retrouvez toutes vos listes en entrant vos identifiants</p>
+
+        <ion-item lines="none">
+          <ion-label position="stacked">Courriel</ion-label>
+          <ion-input inputmode="email" type="email" formControlName="email" required></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="stacked">Mot de passe</ion-label>
+          <ion-input type="password" formControlName="password" required></ion-input>
+        </ion-item>
+
+        <ion-button fill="clear" type="submit" [disabled]="!loginForm.valid">
+          Se connecter
+          <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+        </ion-button>
+
+        <a routerLink="/register" routerLinkActive="active">Pas de compte ?</a>
+
+      </form>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
