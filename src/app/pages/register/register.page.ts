@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingService } from 'src/app/services/loading.service';
+import { RoutingService } from 'src/app/services/routing.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: "app-register",
@@ -42,60 +44,17 @@ export class RegisterPage implements OnInit {
     private fb: FormBuilder,
     private auth: AngularFireAuth,
     private router: Router,
-    private loadingController: LoadingController,
-    private toastController: ToastController
+    private routeService: RoutingService,
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ) {}
 
-  ngOnInit() {}
-
-  private async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: "Inscription en cours…",
-      spinner: "dots",
-    });
-    await loading.present();
-
-    const { role, data } = await loading.onDidDismiss();
-    console.log("Loading dismissed!");
-  }
-
-  private async dismissLoading() {
-    await this.loadingController.dismiss();
-    console.log("dismissed");
-  }
-
-  private async presentToast(message: string) {
-    const toast = await this.toastController.create({
-      message,
-      duration: 5000,
-      position: "bottom",
-      color: "danger",
-      buttons: [
-        {
-          side: "end",
-          text: "D'accord",
-          role: "cancel",
-          handler: () => {
-            console.log("Cancel clicked");
-          },
-        },
-      ],
-    });
-    toast.present();
-  }
-
-  private async presentToastForEmailConfirmation() {
-    const toast = await this.toastController.create({
-      header: "Vous être maintenant enregistré !",
-      message: "Veuillez aller vérifier vos courriels pour confirmer votre adresse. Sans cela, vous ne pourrez pas réinitialiser votre mot de passe en cas de perte.",
-      position: "bottom",
-      color: "success",
-    });
-    toast.present();
+  ngOnInit() {
+    this.routeService.subscribeRoute();
   }
 
   protected async onSubmit() {
-    this.presentLoading();
+    this.loadingService.presentLoading("Inscription en cours…");
     const email = this.registerForm.get("email").value;
     const password = this.registerForm.get("password").value;
 
@@ -106,22 +65,22 @@ export class RegisterPage implements OnInit {
       );
       await accountCreated.user.sendEmailVerification();
       await this.router.navigate(["/", "home"]);
-      this.presentToastForEmailConfirmation();
-      this.dismissLoading();
+      this.toastService.presentToastSuccessSignUp();
+      this.loadingService.dismissLoading();
     } catch (error) {
-      this.dismissLoading();
+      this.loadingService.dismissLoading();
 
       switch (error.code) {
         case "auth/email-already-in-use":
-          this.presentToast("Le courriel est déjà utilisé.");
+          this.toastService.presentToastError("Le courriel est déjà utilisé.");
           console.log("ERREUR : Le courriel est déjà utilisé.");
           break;
         case "auth/invalid-email":
-          this.presentToast("Le courriel n'est pas valide.");
+          this.toastService.presentToastError("Le courriel n'est pas valide.");
           console.log("ERREUR : Le courriel n'est pas valide.");
           break;
         default:
-          this.presentToast(error.message);
+          this.toastService.presentToastError(error.message);
           console.log(error.message);
           break;
       }

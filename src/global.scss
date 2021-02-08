@@ -1,11 +1,20 @@
-/* Utilisés par le toast "presentToastWithForgotPasswordButton" de la page login */
+/* Utilisés par le toast "presentToastForgotPassword" du ToastService */
 .my-custom-toast {
-  --button-color:var(--ion-color-warning);
+  --button-color: var(--ion-color-warning);
 }
 
-body[color-theme="light"] .my-custom-toast.ios {
-  --background: var(--ion-color-dark);
+body[color-theme="dark"] .my-custom-toast {
+  --button-color: #0944ff;
 }
+
+.my-custom-toast.ios {
+  --button-color: #0944ff;
+}
+
+body[color-theme="dark"] .my-custom-toast.ios {
+  --button-color: var(--ion-color-warning);
+}
+
 
 /*
  * App Global CSS

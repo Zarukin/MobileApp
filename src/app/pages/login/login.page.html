@@ -24,7 +24,11 @@
 
         <ion-item lines="none">
           <ion-label position="stacked">Mot de passe</ion-label>
-          <ion-input type="password" formControlName="password" required></ion-input>
+          <ion-input class="password-input" type="password" formControlName="password" required>
+            <button class="forgot-password-input" type="button" (click)="this.toastService.presentToastForgotPassword()">
+              <ion-icon slot="icon-only" name="finger-print"></ion-icon>
+            </button>
+          </ion-input>
         </ion-item>
 
         <ion-button fill="clear" type="submit" [disabled]="!loginForm.valid">
