@@ -5,15 +5,15 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Courriel</ion-label>
-      <ion-input inputmode="email" type="email" formControlName="email" required></ion-input>
-      <ion-text color="danger" *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched">
+      <ion-input inputmode="email" type="email" formControlName="email" autocomplete="email" required></ion-input>
+      <ion-text color="danger" *ngIf="registerForm.controls.email.value !== '' && registerForm.controls.email.invalid && registerForm.controls.email.touched && registerForm.controls.email.dirty">
         <span><small>Le courriel n'est pas valide.</small></span>
       </ion-text>
     </ion-item>
 
     <ion-item lines="none">
       <ion-label position="stacked">Mot de passe</ion-label>
-      <ion-input type="password" formControlName="password" required></ion-input>
+      <ion-input type="password" formControlName="password" clearOnEdit="false" required></ion-input>
       <ion-text color="danger" *ngIf="registerForm.controls.password.errors?.minlength && registerForm.controls.password.touched">
         <span><small>Le mot de passe doit faire au moins 8 caractères.</small></span>
       </ion-text>
@@ -24,7 +24,7 @@
 
     <ion-item lines="none">
       <ion-label position="stacked">Confirmer le mot de passe</ion-label>
-      <ion-input type="password" formControlName="confirmPassword" required></ion-input>
+      <ion-input type="password" formControlName="confirmPassword" clearOnEdit="false" required></ion-input>
       <ion-text color="danger" *ngIf="registerForm.controls.confirmPassword.errors?.mustmatch && registerForm.controls.confirmPassword.touched">
         <span><small>Les mots de passe ne correspondent pas.</small></span>
       </ion-text>

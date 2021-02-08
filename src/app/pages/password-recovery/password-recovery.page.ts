@@ -12,7 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class PasswordRecoveryPage implements OnInit {
   passwordRecoveryForm = this.fb.group({
-    email: ["", [Validators.required, Validators.email]],
+    email: ["", [Validators.required]],
   });
 
   constructor(

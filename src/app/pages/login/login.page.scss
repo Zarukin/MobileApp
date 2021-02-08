@@ -93,18 +93,7 @@ ion-content.ios {
   }
 }
 
-.forgot-password-input {
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  margin: 0;
+.forgot-password-input-button {
   order: 1;
-  outline: none;
-  background-color: transparent;
-}
-
-.forgot-password-input ion-icon {
-  height: 20px;
-  width: 20px;
-  color:var(--ion-color-medium-shade);
+  --ripple-color: transparent;
 }
