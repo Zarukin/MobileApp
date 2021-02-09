@@ -50,7 +50,10 @@ export class HomePage implements OnInit, OnDestroy {
       if (user) {
         this.verifiedEmail = user.emailVerified;
         console.log("Is the email verified ? " + this.verifiedEmail);
-        if (!this.verifiedEmail && this.routeService.getPreviousRoute() !== "/register") {
+        if (
+          !this.verifiedEmail &&
+          this.routeService.getPreviousRoute() !== "/register"
+        ) {
           this.toastService.presentToastForEmailConfirmation();
         }
       }
@@ -98,5 +101,9 @@ export class HomePage implements OnInit, OnDestroy {
       await this.toastService.dismissToast();
     }
     this.loadingService.dismissLoading();
+  }
+
+  doRefresh(event) {
+    window.location.reload();
   }
 }

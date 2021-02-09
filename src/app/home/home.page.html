@@ -32,11 +32,18 @@
 <ion-router-outlet id="main"></ion-router-outlet>
 
 <ion-content [fullscreen]="true" [scrollEvents]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <ion-item-sliding *ngFor="let list of lists">
-      <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
-        <ion-label>{{list.name}}</ion-label>
-      </ion-item>
+        <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
+          <ion-label>{{list.name}}</ion-label>
+          <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge>
+        </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteList(list)" >
           <ion-icon slot="icon-only" name="trash"></ion-icon>
