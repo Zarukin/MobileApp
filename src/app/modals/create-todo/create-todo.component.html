@@ -20,7 +20,7 @@
   <form [formGroup]="todoForm" (ngSubmit)="onFormSubmit()">
     <ion-item>
       <ion-label position="floating">Nom</ion-label>
-      <ion-input type="text" formControlName="todoName" required></ion-input>
+      <ion-input type="text" formControlName="todoName" autofocus="true" required></ion-input>
     </ion-item>
 
     <ion-item>
