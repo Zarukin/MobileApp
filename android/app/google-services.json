@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "805634400274",
+    "project_id": "mobileapp-d33a9",
+    "storage_bucket": "mobileapp-d33a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805634400274:android:cebbe4b949f723663038cb",
+        "android_client_info": {
+          "package_name": "com.im2ag.todos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "805634400274-jvfinbp8ibndf8lc3qionuf4tb8endmc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.im2ag.todos",
+            "certificate_hash": "c790b518578ec7a1196e03dbe6b7a9d17bbbb565"
+          }
+        },
+        {
+          "client_id": "805634400274-b8lb86fhfd6h9o7gaigl9ngtk5e2ad4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCptgPQ96GO4mJszrnbBSpi73ZtIxyp2pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "805634400274-b8lb86fhfd6h9o7gaigl9ngtk5e2ad4k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

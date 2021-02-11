@@ -6,7 +6,29 @@ import { ToastController } from "@ionic/angular";
   providedIn: "root",
 })
 export class ToastService {
-  constructor(private toastController: ToastController, private router: Router) {}
+  constructor(
+    private toastController: ToastController,
+    private router: Router
+  ) {}
+
+  public async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 5000,
+      position: "bottom",
+      buttons: [
+        {
+          side: "end",
+          text: "D'accord",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+      ],
+    });
+    toast.present();
+  }
 
   public async presentToastError(message: string) {
     const toast = await this.toastController.create({

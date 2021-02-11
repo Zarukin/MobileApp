@@ -41,6 +41,10 @@ img {
   height: 200px;
 }
 
+h6 {
+  margin-top: 50px;
+}
+
 ion-input {
   margin-top: 10px;
   border-radius: 5px;
@@ -96,4 +100,32 @@ ion-content.ios {
 .forgot-password-input-button {
   order: 1;
   --ripple-color: transparent;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--ion-color-medium-tint);
+    color: var(--ion-color-medium-tint);
+    overflow: visible;
+    text-align: center;
+    height: 5px;
+    margin: 20px;
+}
+
+hr:after {
+    background: #fff;
+    content: 'ou';
+    font-size: 15px;
+    color: var(--ion-color-medium-tint);
+    padding: 0 4px;
+    position: relative;
+    top: -13px;
+}
+
+:host-context(body[color-theme="dark"]) hr:after {
+  background: var(--ion-background-color);
+}
+
+ion-button {
+  font-size: 13.5px;
 }

@@ -1,12 +1,20 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "myApp",
+  "appId": "com.im2ag.todos",
+  "appName": "Todos",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
+    },
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "serverClientId": "805634400274-jvfinbp8ibndf8lc3qionuf4tb8endmc.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   },
   "cordova": {}

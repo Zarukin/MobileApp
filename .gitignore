@@ -30,3 +30,8 @@ npm-debug.log*
 /plugins
 /www
 /src/environments
+/android/.settings
+/android/app/.settings
+/android/.project
+/android/app/.project
+/android/app/.classpath
