@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -20,17 +21,24 @@ export class PasswordRecoveryPage implements OnInit {
     private auth: AngularFireAuth,
     private router: Router,
     private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – Mot de passe oublié");
+  }
 
   async onSubmit() {
     try {
       await this.loadingService.presentLoading("Veuillez patienter…");
       const email = this.passwordRecoveryForm.get("email").value;
       await this.auth.sendPasswordResetEmail(email);
-      this.toastService.presentToastSuccess("Si ce compte existe vous allez recevoir un courriel pour réinitialiser votre mot de passe.");
+      this.toastService.presentToastSuccess(
+        "Si ce compte existe vous allez recevoir un courriel pour réinitialiser votre mot de passe."
+      );
       await this.router.navigate(["/", "login"]);
       this.loadingService.dismissLoading();
     } catch (error) {

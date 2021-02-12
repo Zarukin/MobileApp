@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
 import { RoutingService } from 'src/app/services/routing.service';
@@ -46,11 +47,16 @@ export class RegisterPage implements OnInit {
     private router: Router,
     private routeService: RoutingService,
     private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {
     this.routeService.subscribeRoute();
+  }
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – Inscription");
   }
 
   protected async onSubmit() {

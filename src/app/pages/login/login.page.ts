@@ -8,6 +8,7 @@ import { ToastService } from "src/app/services/toast.service";
 import "@codetrix-studio/capacitor-google-auth";
 import { Plugins } from "@capacitor/core";
 import firebase from "firebase/app";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-login",
@@ -31,10 +32,15 @@ export class LoginPage implements OnInit {
     private auth: AngularFireAuth,
     private router: Router,
     private loadingService: LoadingService,
-    public toastService: ToastService
+    public toastService: ToastService,
+    private titleService: Title
   ) {}
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – Connexion");
+  }
 
   protected lockingSwipe() {
     this.slides.lockSwipes(true);
@@ -83,6 +89,58 @@ export class LoginPage implements OnInit {
           break;
         default:
           console.log(error.error);
+          break;
+      }
+    }
+  }
+
+  async loginWithSocial(social: string) {
+    try {
+      let provider = null;
+      this.loadingService.presentLoading("En attente…");
+      if (social === "github") {
+        provider = new firebase.auth.GithubAuthProvider();
+      } else if (social === "twitter") {
+        provider = new firebase.auth.TwitterAuthProvider();
+      } else if (social === "facebook") {
+        provider = new firebase.auth.FacebookAuthProvider();
+      }
+      const result = await firebase.auth().signInWithPopup(provider);
+      const credential = result.credential;
+      const accountCreated = await this.auth.signInWithCredential(credential);
+      await accountCreated.user.sendEmailVerification();
+      await this.router.navigate(["/", "home"]);
+      this.loadingService.dismissLoading();
+    } catch (error) {
+      console.log(error);
+      this.loadingService.dismissLoading();
+
+      switch (error.code) {
+        case "auth/popup-closed-by-user":
+          this.toastService.presentToast("La connexion a été annulée.");
+          console.log(
+            "Fenêtre fermée. Connexion OAuth annulée par l'utilisateur."
+          );
+          break;
+        case "auth/user-cancelled":
+          this.toastService.presentToast("La connexion a été annulée.");
+          console.log(
+            "Connexion annulée. Connexion OAuth annulée par l'utilisateur."
+          );
+          break;
+        case "auth/account-exists-with-different-credential":
+          this.toastService.presentToastError(
+            "Le courriel est déjà utilisé par un autre service."
+          );
+          console.log("Le courriel est déjà utilisé par un autre service.");
+          break;
+        case "auth/user-disabled":
+          this.toastService.presentToastError("Ce compte a été désactivé.");
+          console.log("Ce compte a été désactivé.");
+          break;
+        default:
+          this.toastService.presentToastError(error.code);
+          console.log(error.code);
           break;
       }
     }
