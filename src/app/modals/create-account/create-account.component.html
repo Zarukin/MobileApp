@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Compte Todos</ion-title>
+    <ion-buttons slot="end">
+      <form [formGroup]="createAccountForm" (ngSubmit)="onFormSubmit()">
+        <ion-button type="submit" fill="solid" color="success" [disabled]="!createAccountForm.valid">
+          Créer
+        </ion-button>
+      </form>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-text color="dark">
+    <h6>Pour créer un compte Todos, vous devez définir un mot de passe.</h6>
+  </ion-text>
+  <p>Celui-ci doit être assez fort (au moins 8 caractères), contenir des minuscules, des majuscules, des chiffres et des symboles. <br> Le courriel utilisé pour vous connecter sera celui actuellement lié à votre compte.</p>
+
+  <form [formGroup]="createAccountForm" (ngSubmit)="onFormSubmit()">
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Choisissez un mot de passe</ion-label>
+      <ion-input type="password" formControlName="password" required></ion-input>
+      <ion-text color="danger" *ngIf="createAccountForm.controls.password.errors?.minlength && createAccountForm.controls.password.touched">
+        <span><small>Le mot de passe doit faire au moins 8 caractères.</small></span>
+      </ion-text>
+      <ion-text color="danger" *ngIf="createAccountForm.controls.password.errors?.pattern && createAccountForm.controls.password.touched && !createAccountForm.controls.password.errors?.minlength">
+        <span><small>Le mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et un symbole.</small></span>
+      </ion-text>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Confirmer le mot de passe</ion-label>
+      <ion-input type="password" formControlName="confirmPassword" required></ion-input>
+      <ion-text color="danger" *ngIf="createAccountForm.controls.confirmPassword.errors?.mustmatch && createAccountForm.controls.confirmPassword.touched">
+        <span><small>Les mots de passe ne correspondent pas.</small></span>
+      </ion-text>
+    </ion-item>
+  </form>
+</ion-content>

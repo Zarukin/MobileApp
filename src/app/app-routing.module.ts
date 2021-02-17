@@ -48,6 +48,13 @@ const routes: Routes = [
     canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectLoggedInToHome}
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./pages/account/account.module').then(m => m.AccountPageModule),
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}
+  },
+
 
 
 ];

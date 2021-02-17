@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Courriel</ion-title>
+    <ion-buttons slot="end">
+      <form [formGroup]="newEmailForm" (ngSubmit)="onFormSubmit()">
+        <ion-button type="submit" fill="solid" color="success" [disabled]="!newEmailForm.valid">
+          Modifier
+        </ion-button>
+      </form>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-text color="dark">
+    <h6>Changez le courriel associé à votre compte</h6>
+  </ion-text>
+  <p>Veillez à ne pas vous tromper ! Il sert pour réinitialiser votre mot de passe en cas de perte. C'est sur ce courriel que nous communiquerons avec vous. Il remplace votre précédente adresse.</p>
+
+
+  <form [formGroup]="newEmailForm" (ngSubmit)="onFormSubmit()">
+    <ion-item lines="none">
+      <ion-label position="stacked">Nouveau courriel</ion-label>
+      <ion-input type="text" formControlName="newEmail" autofocus="true" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" *ngIf="signInMethods.includes('password')">
+      <ion-label position="stacked">Mot de passe</ion-label>
+      <ion-input type="password" formControlName="password" required></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 6.35 6.3489" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Logo de Todos</title>
+ <defs>
+  <linearGradient id="linearGradient1106">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#646464" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient1362-1" x1="63.286" x2="140.95" y1="540.13" y2="461.71" gradientTransform="translate(426.24 17.287)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#ff3e3b" offset="0"/>
+   <stop stop-color="#2120ff" offset="1"/>
+  </linearGradient>
+  <clipPath id="clipPath1328-8">
+   <circle cx="78.738" cy="583.32" r="40.831" fill="none" stroke-opacity="0"/>
+  </clipPath>
+  <linearGradient id="linearGradient1689" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(373.26 -207.84)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1691" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(393.67 -207.84)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1693" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(373.26 -187.43)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1695" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(393.67 -187.43)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1697" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(414.09 -207.84)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1699" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(414.09 -187.43)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1701" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(414.09 -228.25)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1703" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(393.67 -228.25)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1705" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(373.26 -228.25)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1707" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(434.5 -228.25)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1709" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(434.5 -207.84)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1711" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(434.5 -187.43)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1713" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(373.26 -167.02)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1715" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(393.67 -167.02)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1717" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(414.09 -167.02)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+  <linearGradient id="linearGradient1719" x1="54.051" x2="74.461" y1="544.29" y2="564.7" gradientTransform="translate(434.5 -167.02)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient1106"/>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title>Logo de Todos</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(-497.12 -466.94)">
+  <g transform="matrix(.077312 0 0 .077312 458.69 430.84)">
+   <g transform="matrix(1.0048 0 0 1.0048 459.12 -78.133)" clip-path="url(#clipPath1328-8)" fill-rule="evenodd" stroke="#646464" stroke-width=".01">
+    <rect transform="rotate(45)" x="427.31" y="336.44" width="20.411" height="20.411" fill="url(#linearGradient1689)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="447.73" y="336.44" width="20.411" height="20.411" fill="url(#linearGradient1691)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="427.31" y="356.85" width="20.411" height="20.411" fill="url(#linearGradient1693)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="447.73" y="356.85" width="20.411" height="20.411" fill="url(#linearGradient1695)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="468.14" y="336.44" width="20.411" height="20.411" fill="url(#linearGradient1697)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="468.14" y="356.85" width="20.411" height="20.411" fill="url(#linearGradient1699)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="468.14" y="316.03" width="20.411" height="20.411" fill="url(#linearGradient1701)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="447.73" y="316.03" width="20.411" height="20.411" fill="url(#linearGradient1703)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="427.31" y="316.03" width="20.411" height="20.411" fill="url(#linearGradient1705)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="488.55" y="316.03" width="20.411" height="20.411" fill="url(#linearGradient1707)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="488.55" y="336.44" width="20.411" height="20.411" fill="url(#linearGradient1709)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="488.55" y="356.85" width="20.411" height="20.411" fill="url(#linearGradient1711)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="427.31" y="377.26" width="20.411" height="20.411" fill="url(#linearGradient1713)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="447.73" y="377.26" width="20.411" height="20.411" fill="url(#linearGradient1715)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="468.14" y="377.26" width="20.411" height="20.411" fill="url(#linearGradient1717)" opacity=".84828"/>
+    <rect transform="rotate(45)" x="488.55" y="377.26" width="20.411" height="20.411" fill="url(#linearGradient1719)" opacity=".84828"/>
+   </g>
+   <circle cx="538.18" cy="508" r="41.026" fill="url(#linearGradient1362-1)" opacity=".84828" stroke-opacity="0"/>
+   <g transform="translate(284.25 -120.42)" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="9.265">
+    <path d="m275.06 612.13c-6.2367 14.552-12.473 29.104-18.93 32.191-6.457 3.0868-13.134-5.2915-19.812-13.67" stroke="#212620" stroke-opacity=".39024"/>
+    <path d="m271.55 611.85c-6.2367 14.552-12.473 29.104-18.93 32.191-6.457 3.0868-13.134-5.2915-19.812-13.67" stroke="#fff"/>
+   </g>
+  </g>
+ </g>
+</svg>

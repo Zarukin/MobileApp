@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mon compte</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+<ion-list>
+
+  <ion-item-divider>
+    <ion-label>Informations basiques</ion-label>
+  </ion-item-divider>
+
+  <ion-item (click)="handleSocial('password')" button>
+    <ion-icon name="logo-todos" slot="start"></ion-icon>
+    <ion-label>Compte Todos</ion-label>
+    <ion-icon *ngIf="signInMethods.includes('password')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
+    <ion-note *ngIf="!signInMethods.includes('password')" slot="end" color="primary">Créer</ion-note>
+  </ion-item>
+
+  <ion-item (click)="presentModalEmail()" button>
+    <ion-icon name="at-outline" slot="start"></ion-icon>
+    <ion-label>
+      Modifier le courriel
+      <p>{{userEmail}}</p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item (click)="presentModalPassword()" *ngIf="signInMethods.includes('password')" button>
+    <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+    <ion-label>Modifier le mot de passe</ion-label>
+  </ion-item>
+
+  <ion-item-divider>
+    <ion-label>Comptes connectés</ion-label>
+  </ion-item-divider>
+
+  <ion-item (click)="handleSocial('google.com')" button>
+    <ion-icon name="logo-google" slot="start"></ion-icon>
+    <ion-label>Google</ion-label>
+    <ion-icon *ngIf="signInMethods.includes('google.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
+    <ion-note *ngIf="!signInMethods.includes('google.com')" slot="end" color="primary">Lier</ion-note>
+  </ion-item>
+
+  <ion-item (click)="handleSocial('twitter.com')" button>
+    <ion-icon name="logo-twitter" slot="start"></ion-icon>
+    <ion-label>Twitter</ion-label>
+    <ion-icon *ngIf="signInMethods.includes('twitter.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
+    <ion-note *ngIf="!signInMethods.includes('twitter.com')" slot="end" color="primary">Lier</ion-note>
+  </ion-item>
+
+  <ion-item (click)="handleSocial('github.com')" button>
+    <ion-icon name="logo-github" slot="start"></ion-icon>
+    <ion-label>GitHub</ion-label>
+    <ion-icon *ngIf="signInMethods.includes('github.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
+    <ion-note *ngIf="!signInMethods.includes('github.com')" slot="end" color="primary">Lier</ion-note>
+  </ion-item>
+
+  <ion-item (click)="handleSocial('facebook.com')" button>
+    <ion-icon name="logo-facebook" slot="start"></ion-icon>
+    <ion-label>Facebook</ion-label>
+    <ion-icon *ngIf="signInMethods.includes('facebook.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
+    <ion-note *ngIf="!signInMethods.includes('facebook.com')" slot="end" color="primary">Lier</ion-note>
+  </ion-item>
+
+  <ion-item-divider>
+    <ion-label>Gestion du compte</ion-label>
+  </ion-item-divider>
+
+  <ion-item (click)="presentAlertDeletion()" button>
+    <ion-icon name="skull-outline" slot="start" color="danger"></ion-icon>
+    <ion-label color="danger">Supprimer le compte</ion-label>
+  </ion-item>
+  
+</ion-list>
+</ion-content>

@@ -1,0 +1,30 @@
+ion-icon {
+    color: var(--ion-color-dark);
+}
+
+ion-item-divider.md {
+    --background: var(--ion-color-light-tint);
+    --color: var(--ion-color-dark);
+    height: 20px;
+    border: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: small;
+}
+
+:host-context(body[color-theme="dark"]) ion-item-divider.md {
+    --background: inherit;
+}
+
+ion-list.md {
+    padding-top: 0;
+}
+
+ion-item.md {
+    --border-color: transparent;
+}
+
+ion-note.md {
+    font-weight: bold;
+    font-size: small;
+}
