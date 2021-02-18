@@ -15,9 +15,10 @@ import { Router } from '@angular/router';
   styleUrls: ["./account.page.scss"],
 })
 export class AccountPage implements OnInit {
-  private currentUser: firebase.User;
-  protected userEmail: string;
-  protected signInMethods: string[] = [];
+  public currentUser: firebase.User;
+  public userEmail: string;
+  public signInMethods: string[] = [];
+  public emailVerified: boolean;
 
   constructor(
     private auth: AngularFireAuth,
@@ -31,6 +32,7 @@ export class AccountPage implements OnInit {
   async ngOnInit() {
     await this.fetchUserEmail();
     await this.fetchConnectedAccount();
+    this.emailVerified = this.currentUser.emailVerified;
   }
 
   private async fetchUserEmail() {
@@ -45,7 +47,7 @@ export class AccountPage implements OnInit {
     console.log("Sign in methods: " + this.signInMethods.toString());
   }
 
-  protected handleSocial(social: string) {
+  public handleSocial(social: string) {
     if (this.signInMethods.includes(social)) {
       if (social === "password") {
         return null;
@@ -128,6 +130,11 @@ export class AccountPage implements OnInit {
     }
   }
 
+  public sendConfirmationEmail() {
+    this.currentUser.sendEmailVerification();
+    this.toastService.presentToastSuccess("Courriel de vérification envoyé.");
+  }
+
   private async deleteAccount(confirmation: string) {
     try {
       if (this.signInMethods.includes("password")) {
@@ -175,7 +182,7 @@ export class AccountPage implements OnInit {
     }
   }
 
-  protected async presentModalPassword() {
+  public async presentModalPassword() {
     const modal = await this.modalController.create({
       component: ChangePasswordComponent,
       swipeToClose: true,
@@ -185,7 +192,7 @@ export class AccountPage implements OnInit {
     return await modal.present();
   }
 
-  protected async presentModalEmail() {
+  public async presentModalEmail() {
     const modal = await this.modalController.create({
       component: ChangeEmailComponent,
       swipeToClose: true,
@@ -235,7 +242,7 @@ export class AccountPage implements OnInit {
     console.log("Alert dismissed!");
   }
 
-  protected async presentAlertDeletion() {
+  public async presentAlertDeletion() {
     const alert = await this.alertController.create({
       cssClass: "alert-popup",
       header: "Suppression du compte",
