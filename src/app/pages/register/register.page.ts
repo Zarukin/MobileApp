@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ["./register.page.scss"],
 })
 export class RegisterPage implements OnInit {
-  protected registerForm = this.fb.group(
+  public registerForm = this.fb.group(
     {
       email: ["", [Validators.required, Validators.email]],
       password: [
@@ -59,7 +59,7 @@ export class RegisterPage implements OnInit {
     this.titleService.setTitle("Todos – Inscription");
   }
 
-  protected async onSubmit() {
+  public async onSubmit() {
     this.loadingService.presentLoading("Inscription en cours…");
     const email = this.registerForm.get("email").value;
     const password = this.registerForm.get("password").value;

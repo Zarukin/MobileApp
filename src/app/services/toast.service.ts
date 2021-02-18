@@ -118,10 +118,10 @@ export class ToastService {
     toast.present();
 
     const { role, data } = await toast.onDidDismiss();
-    this.presentToastForEmailConfirmation();
     console.log("Toast dismissed!");
   }
 
+  // Non utilisé actuellement
   public async presentToastForEmailConfirmation() {
     const toast = await this.toastController.create({
       header: "Courriel non vérifié",
@@ -142,4 +142,12 @@ export class ToastService {
       console.error("The toast controller doesn't exist : " + error.message);
     }
   }
+
+  // Example de code pour supprimer tous les toasts présents.
+  /** const toastToDismiss = await this.toastController.getTop();
+   *  while (toastToDismiss !== undefined) {
+   *    await this.toastController.dismiss();
+   *    console.log("toast dismissed : " + toastToDismiss);
+   *  }
+   */
 }

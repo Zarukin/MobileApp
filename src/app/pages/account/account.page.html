@@ -70,7 +70,7 @@
     <ion-label>Gestion du compte</ion-label>
   </ion-item-divider>
 
-  <ion-item *ngIf="emailVerified === false" (click)="sendConfirmationEmail()" button>
+  <ion-item *ngIf="emailVerified === false" [disabled]="sendEmailVerificationClicked" (click)="sendConfirmationEmail(); sendEmailVerificationClicked = true" button>
     <ion-icon name="mail-unread-outline" slot="start"></ion-icon>
     <ion-label>Renvoyer le courriel de confirmation</ion-label>
   </ion-item>

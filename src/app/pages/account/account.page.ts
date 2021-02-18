@@ -8,6 +8,7 @@ import { ChangePasswordComponent } from 'src/app/modals/change-password/change-p
 import { ChangeEmailComponent } from 'src/app/modals/change-email/change-email.component';
 import { CreateAccountComponent } from 'src/app/modals/create-account/create-account.component';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: "app-account",
@@ -19,6 +20,7 @@ export class AccountPage implements OnInit {
   public userEmail: string;
   public signInMethods: string[] = [];
   public emailVerified: boolean;
+  public sendEmailVerificationClicked = false;
 
   constructor(
     private auth: AngularFireAuth,
@@ -26,13 +28,18 @@ export class AccountPage implements OnInit {
     private toastService: ToastService,
     private modalController: ModalController,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {}
 
   async ngOnInit() {
     await this.fetchUserEmail();
     await this.fetchConnectedAccount();
     this.emailVerified = this.currentUser.emailVerified;
+  }
+
+  ionViewWillEnter() {
+    this.titleService.setTitle("Todos – Mon compte");
   }
 
   private async fetchUserEmail() {
@@ -47,9 +54,17 @@ export class AccountPage implements OnInit {
     console.log("Sign in methods: " + this.signInMethods.toString());
   }
 
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
   public handleSocial(social: string) {
     if (this.signInMethods.includes(social)) {
       if (social === "password") {
+        this.toastService.presentToast(
+          "Vous ne pouvez pas désactiver votre compte Todos."
+        );
+        console.log("Compte Todos clicked");
         return null;
       } else {
         this.presentAlertCheckbox(social);
@@ -130,9 +145,12 @@ export class AccountPage implements OnInit {
     }
   }
 
-  public sendConfirmationEmail() {
+  public async sendConfirmationEmail() {
     this.currentUser.sendEmailVerification();
     this.toastService.presentToastSuccess("Courriel de vérification envoyé.");
+    await this.delay(60000); // 60 secondes
+    console.log("Send confirmation email button available again.");
+    this.sendEmailVerificationClicked = false;
   }
 
   private async deleteAccount(confirmation: string) {

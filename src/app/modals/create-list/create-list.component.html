@@ -17,9 +17,15 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-text color="dark">
+    <h6>Créez de nouvelles listes</h6>
+  </ion-text>
+  <p>Une liste permet de vous organiser dans votre travail, de définir les étapes d'une activité ou peut servir de pense-bête. Elle contient plusieurs tâches.</p>
+
   <form [formGroup]="listForm" (ngSubmit)="onFormSubmit()">
-    <ion-item>
-      <ion-label position="floating">Nom</ion-label>
+    <ion-item lines="none">
+      <ion-label position="stacked">Nom</ion-label>
       <ion-input type="text" formControlName="listName" autofocus="true" required></ion-input>
     </ion-item>
   </form>

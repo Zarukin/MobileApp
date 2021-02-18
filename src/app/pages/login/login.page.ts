@@ -17,12 +17,12 @@ import { Title } from "@angular/platform-browser";
 })
 export class LoginPage implements OnInit {
   @ViewChild("mySlider") private slides: IonSlides;
-  protected slideOpts = {
+  public slideOpts = {
     initialSlide: 0,
     speed: 400,
     pager: true,
   };
-  protected loginForm = this.fb.group({
+  public loginForm = this.fb.group({
     email: ["", [Validators.required]],
     password: ["", [Validators.required]],
   });
@@ -42,11 +42,11 @@ export class LoginPage implements OnInit {
     this.titleService.setTitle("Todos – Connexion");
   }
 
-  protected lockingSwipe() {
+  public lockingSwipe() {
     this.slides.lockSwipes(true);
   }
 
-  protected hintSwipe() {
+  public hintSwipe() {
     document.getElementById("swipe-hint").hidden = false;
   }
 
@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
     this.slides.slideTo(1);
   }
 
-  async loginWithGoogle() {
+  public async loginWithGoogle() {
     try {
       this.loadingService.presentLoading("En attente…");
       const googleUser = (await Plugins.GoogleAuth.signIn()) as any;
@@ -94,7 +94,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  async loginWithSocial(social: string) {
+  public async loginWithSocial(social: string) {
     try {
       let provider = null;
       this.loadingService.presentLoading("En attente…");
@@ -146,7 +146,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  protected async onSubmit() {
+  public async onSubmit() {
     try {
       await this.loadingService.presentLoading("Connexion en cours…");
       const email = this.loginForm.get("email").value;

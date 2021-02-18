@@ -16,12 +16,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
   <ion-text color="dark">
     <h6>Changez le courriel associé à votre compte</h6>
   </ion-text>
-  <p>Veillez à ne pas vous tromper ! Il sert pour réinitialiser votre mot de passe en cas de perte. C'est sur ce courriel que nous communiquerons avec vous. Il remplace votre précédente adresse.</p>
+  <p>C'est le seul moyen de communication que nous avons avec vous. Il sert pour réinitialiser votre mot de passe en cas de perte. Il remplace votre précédente adresse.</p>
 
 
   <form [formGroup]="newEmailForm" (ngSubmit)="onFormSubmit()">

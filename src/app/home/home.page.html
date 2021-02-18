@@ -22,11 +22,11 @@
         <ion-toggle [(ngModel)]="darkMode" (ionChange)="toggleColourTheme()"></ion-toggle>
       </ion-item>
       <ion-item button routerLink="/account" routerLinkActive="active">
-        <ion-icon class="menu-icon" name="layers-outline" slot="start"></ion-icon>
+        <ion-icon class="menu-icon" name="person-outline" slot="start"></ion-icon>
         <ion-label>Mon compte</ion-label>
       </ion-item>
       <ion-item button (click)="logout()">
-        <ion-icon class="menu-icon" color="danger" name="power-outline" slot="start"></ion-icon>
+        <ion-icon class="menu-icon" color="danger" name="log-out-outline" slot="start"></ion-icon>
         <ion-label color="danger">Se déconnecter</ion-label>
       </ion-item>
     </ion-list>
@@ -55,10 +55,21 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentModalList()" color="dark">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="presentModalList()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+<ion-footer class="email-verified-warning" *ngIf="!verifiedEmail">
+  <ion-item color="warning">
+    <ion-label class="ion-text-wrap">
+      <ion-text>
+        <h2><strong>Courriel non vérifié</strong></h2>
+      </ion-text>
+      <p>Veuillez aller vérifier vos courriels pour confirmer votre adresse. Sans cela, vous ne pourrez pas réinitialiser votre mot de passe en cas de perte.</p>
+    </ion-label>
+  </ion-item>
+</ion-footer>

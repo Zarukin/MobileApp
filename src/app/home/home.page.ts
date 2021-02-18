@@ -54,7 +54,7 @@ export class HomePage implements OnInit, OnDestroy {
           !this.verifiedEmail &&
           this.routeService.getPreviousRoute() !== "/register"
         ) {
-          this.toastService.presentToastForEmailConfirmation();
+          // this.toastService.presentToastForEmailConfirmation();
         }
       }
     });
@@ -68,7 +68,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.titleService.setTitle("Todos – Mes listes");
   }
 
-  protected async presentModalList() {
+  public async presentModalList() {
     const modal = await this.modalController.create({
       component: CreateListComponent,
       swipeToClose: true,
@@ -80,11 +80,11 @@ export class HomePage implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  protected deleteList(list: List) {
+  public deleteList(list: List) {
     this.listService.Delete(list);
   }
 
-  protected toggleColourTheme() {
+  public toggleColourTheme() {
     if (this.darkMode === true) {
       document.body.setAttribute("color-theme", "dark");
     } else {
@@ -92,7 +92,7 @@ export class HomePage implements OnInit, OnDestroy {
     }
   }
 
-  protected async logout() {
+  public async logout() {
     this.menuController.close();
     await this.loadingService.presentLoading("Déconnexion…");
     await this.auth.signOut();

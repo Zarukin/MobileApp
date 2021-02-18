@@ -38,6 +38,10 @@ ion-button {
   font-size: 13.5px;
 }
 
+.md ion-button {
+    --border-radius: 5px;
+}
+
 h6 {
     text-align: center;
     padding: 0 16px;

@@ -1,3 +1,60 @@
+ion-input {
+  margin-top: 10px;
+  border-radius: 5px;
+  --padding-start: 10px !important;
+  --padding-end: 10px !important;
+}
+
+:host-context(body[color-theme="light"]) ion-input {
+  --background: rgb(240, 240, 240);
+}
+
+:host-context(body[color-theme="dark"]) ion-input {
+  --background: #1e1e1e;
+}
+
+ion-item {
+  --background-focused-opacity: 0;
+}
+
+:host-context(body[color-theme="dark"]) ion-item {
+  --background: rgba(0,0,0,0);
+}
+
+form {
+  box-sizing: border-box;
+  position: relative;
+}
+
+ion-content.ios {
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+ion-button {
+  font-size: 13.5px;
+}
+
 .md ion-button {
     --border-radius: 5px;
+}
+
+h6 {
+    text-align: center;
+    padding: 0 16px;
+}
+
+p {
+    text-align: justify;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ion-color-step-600, #60646b);
+}
+
+p b {
+    color: var(--ion-text-color, #000000);
 }
