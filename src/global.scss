@@ -30,6 +30,57 @@ body[color-theme="dark"] .my-custom-toast.ios {
   color: var(--ion-color-light);
 }
 
+
+/* Utilisés par les alerts de la page Flag */
+
+.my-defeat-alert {
+  --background: var(--ion-color-danger-shade);
+}
+
+.my-defeat-alert .alert-head h2{
+  color: var(--ion-color-danger-contrast) !important;
+}
+
+.my-defeat-alert .alert-message {
+  color: var(--ion-color-danger-contrast);
+}
+
+.my-defeat-alert .defeat-button {
+  color: var(--ion-color-danger-contrast);
+}
+
+// .my-defeat-alert.md .defeat-button {
+//   border: 1px solid var(--ion-color-danger-contrast);
+//   border-radius: 10px;
+// }
+
+.my-victory-alert {
+  --background: var(--ion-color-success-shade);
+}
+
+.my-victory-alert .alert-head h2{
+  color: var(--ion-color-success-contrast) !important;
+}
+
+.my-victory-alert .alert-message {
+  color: var(--ion-color-success-contrast);
+}
+
+.my-victory-alert .victory-button {
+  color: var(--ion-color-success-contrast);
+}
+
+// .my-victory-alert.md .victory-button {
+//   border: 1px solid var(--ion-color-success-contrast);
+//   border-radius: 10px;
+// }
+
+/* Empêche les inputs de la page Flag de devenir transparents lorsqu'ils sont disabled */
+
+ion-card ion-card-content > ion-input > .native-input[disabled] {
+  opacity: 1 !important;
+}
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------

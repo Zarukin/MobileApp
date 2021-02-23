@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Jeu des drapeaux</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>{{chrono || "15:00"}}</ion-title>
+    <ion-progress-bar value="{{scrolledPercentage}}"></ion-progress-bar>
+    <ion-badge slot="end" color="success">{{answered}} / {{this.correspondanceMap.size}}</ion-badge>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content id="ion-content-id" [scrollEvents]="true" (ionScroll)="updateScrollPercentage($event)">
+
+  <h1 [hidden]="isTheGameStarted">Bienvenue dans le jeu des drapeaux !</h1>
+  <p [hidden]="isTheGameStarted">Le but du jeu est d'essayer de deviner à quel pays appartient chaque drapeau. <br><br> Entrez votre réponse dans la zone de texte en dessous du drapeau correspondant et appuyez sur Entrée pour valider. Une bonne réponse apparaîtra en vert, sinon c'est que vous vous êtes trompé.<br><br> Dès que vous êtes prêt, cliquez sur le bouton « Démarrer » pour lancer le chrono.</p>
+
+  <ion-button (click)="startGame()" size="large" fill="solid" shape="round" [hidden]="isTheGameStarted" [disabled]="isTheGameStarted">
+    Démarrer
+  </ion-button>
+
+  <hr>
+
+  <ion-card *ngFor="let flag of srcFlagList let i = index" [disabled]="!isTheGameStarted">
+    <img alt="flag picture" [src]="'assets/flags/' + flag + '.svg'">
+    <ion-card-content>
+      <ion-input #inputField id="my-ion-input-{{flag}}" (keyup.enter)="checkResponse(flag, inputField?.value)" type="text"></ion-input>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

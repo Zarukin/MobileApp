@@ -67,7 +67,14 @@ export class AccountPage implements OnInit {
         console.log("Compte Todos clicked");
         return null;
       } else {
-        this.presentAlertCheckbox(social);
+        if (this.signInMethods.length <= 1) {
+          this.toastService.presentToast(
+            "Vous devez être connecté avec au moins un compte."
+          );
+          return null;
+        } else {
+          this.presentAlertCheckbox(social);
+        }
       }
     } else {
       if (social === "password") {

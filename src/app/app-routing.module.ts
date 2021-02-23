@@ -53,7 +53,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/account/account.module').then(m => m.AccountPageModule),
     canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectUnauthorizedToLogin}
+  },  {
+    path: 'flag',
+    loadChildren: () => import('./etc/flag/flag.module').then( m => m.FlagPageModule)
   },
+
 
 
 
