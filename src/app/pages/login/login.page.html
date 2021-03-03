@@ -44,19 +44,19 @@
 
         <hr>
 
-        <ion-button class="external-service-button" (click)="loginWithGoogle()" fill="outline" shape="round" color="danger">
+        <ion-button class="external-service-button" (click)="loginWithSocial('google.com')" fill="outline" shape="round" color="danger">
           <ion-icon slot="start" name="logo-google"></ion-icon>
           Se connecter avec Google
         </ion-button>
-        <ion-button class="external-service-button" (click)="loginWithSocial('github')" fill="outline" shape="round" color="dark">
+        <ion-button *ngIf="!isNative" class="external-service-button" (click)="loginWithGitHub()" fill="outline" shape="round" color="dark">
           <ion-icon slot="start" name="logo-github"></ion-icon>
           Se connecter avec GitHub
         </ion-button>
-        <ion-button class="external-service-button" (click)="loginWithSocial('twitter')" fill="outline" shape="round" color="secondary">
+        <ion-button class="external-service-button" (click)="loginWithSocial('twitter.com')" fill="outline" shape="round" color="secondary">
           <ion-icon slot="start" name="logo-twitter"></ion-icon>
           Se connecter avec Twitter
         </ion-button>
-        <ion-button class="external-service-button" (click)="loginWithSocial('facebook')" fill="outline" shape="round" color="primary">
+        <ion-button class="external-service-button" (click)="loginWithSocial('facebook.com')" fill="outline" shape="round" color="primary">
           <ion-icon slot="start" name="logo-facebook"></ion-icon>
           Se connecter avec Facebook
         </ion-button>

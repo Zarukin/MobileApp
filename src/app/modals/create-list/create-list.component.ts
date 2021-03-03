@@ -32,9 +32,7 @@ export class CreateListComponent implements OnInit {
       this.modalController.dismiss();
       return;
     }
-    this.listService.Create(
-      new List(this.listForm.get("listName").value, [])
-    );
+    this.listService.Create(this.listForm.get("listName").value);
     this.modalController.dismiss();
   }
 

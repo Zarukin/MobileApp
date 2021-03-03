@@ -46,7 +46,7 @@
     <ion-item-sliding *ngFor="let list of lists">
         <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
           <ion-label>{{list.name}}</ion-label>
-          <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge>
+          <!-- <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge> -->
         </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteList(list)" >

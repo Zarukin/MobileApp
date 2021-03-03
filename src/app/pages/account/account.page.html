@@ -38,32 +38,36 @@
     <ion-label>Comptes connectés</ion-label>
   </ion-item-divider>
 
-  <ion-item (click)="handleSocial('google.com')" button>
+  <ion-item *ngIf="!isNative" (click)="handleSocial('google.com')" button>
     <ion-icon name="logo-google" slot="start"></ion-icon>
     <ion-label>Google</ion-label>
     <ion-icon *ngIf="signInMethods.includes('google.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
     <ion-note *ngIf="!signInMethods.includes('google.com')" slot="end" color="primary">Lier</ion-note>
   </ion-item>
 
-  <ion-item (click)="handleSocial('twitter.com')" button>
+  <ion-item *ngIf="!isNative" (click)="handleSocial('twitter.com')" button>
     <ion-icon name="logo-twitter" slot="start"></ion-icon>
     <ion-label>Twitter</ion-label>
     <ion-icon *ngIf="signInMethods.includes('twitter.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
     <ion-note *ngIf="!signInMethods.includes('twitter.com')" slot="end" color="primary">Lier</ion-note>
   </ion-item>
 
-  <ion-item (click)="handleSocial('github.com')" button>
+  <ion-item *ngIf="!isNative" (click)="handleSocial('github.com')" button>
     <ion-icon name="logo-github" slot="start"></ion-icon>
     <ion-label>GitHub</ion-label>
     <ion-icon *ngIf="signInMethods.includes('github.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
     <ion-note *ngIf="!signInMethods.includes('github.com')" slot="end" color="primary">Lier</ion-note>
   </ion-item>
 
-  <ion-item (click)="handleSocial('facebook.com')" button>
+  <ion-item *ngIf="!isNative" (click)="handleSocial('facebook.com')" button>
     <ion-icon name="logo-facebook" slot="start"></ion-icon>
     <ion-label>Facebook</ion-label>
     <ion-icon *ngIf="signInMethods.includes('facebook.com')" name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
     <ion-note *ngIf="!signInMethods.includes('facebook.com')" slot="end" color="primary">Lier</ion-note>
+  </ion-item>
+
+  <ion-item *ngIf="isNative">
+    <ion-text color="dark"><p>Pour lier d'autres comptes veuillez passer par l'application web.</p></ion-text>
   </ion-item>
 
   <ion-item-divider>

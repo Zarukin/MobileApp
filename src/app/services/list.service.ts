@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
+import { Observable } from "rxjs";
 import { List } from "../models/list";
 import { Todo } from "../models/todo";
 
@@ -7,10 +9,12 @@ import { Todo } from "../models/todo";
 })
 export class ListService {
   private lists: List[];
+  private listsCollection: AngularFirestoreCollection<List>;
+  listsObservable: Observable<List[]>;
 
-  constructor() {
+  constructor(private afs: AngularFirestore) {
     this.lists = [];
-    const list1 = new List("Divers", [
+    /*const list1 = new List("Divers", [
       new Todo(
         "Faire les courses",
         "- Fourme de Montbrison\n- Papier toilette\n- Morbier\n- Bulots",
@@ -45,18 +49,23 @@ export class ListService {
       new Todo("Reddit", "j'aiplusd'inspi", false),
     ]);
     list3.colour = "warning";
-    this.lists.push(list1, list2, list3);
+    this.lists.push(list1, list2, list3);*/
+    this.listsCollection = this.afs.collection<List>("lists");
+    this.listsObservable = this.listsCollection.valueChanges();
+    this.listsObservable.subscribe((lists) => {
+      this.lists = lists;
+    });
   }
 
   GetAll() {
-    return this.lists;
+    return this.listsObservable;
   }
 
-  GetOne(id: number) {
+  GetOne(id: string) {
     return this.lists.find((list) => list.id === id);
   }
 
-  GetTodo(id: number) {
+  GetTodo(id: string) {
     const currentList = this.lists.find((list) =>
       list.todos.find((todo) => todo.id === id)
     );
@@ -66,21 +75,28 @@ export class ListService {
     };
   }
 
-  Create(list: List) {
-    list.colour = this.GetRandomColour();
-    this.lists.push(list);
+  Create(listName: string) {
+    // list.colour = this.GetRandomColour();
+    // this.lists.push(list);
+    const id = this.afs.createId();
+    const list: List = { id, name: listName, colour: this.GetRandomColour()};
+    this.listsCollection.doc(id).set(list);
+    //this.listsCollection.doc(id).collection<Todo>("todos").add(new Todo("temp","yolo",true))
   }
 
-  CreateTodo(list: List, todo: Todo) {
-    list.todos.push(todo);
+  CreateTodo(list: List, todoName: string, todoDesc: string) {
+    const id = this.afs.createId();
+    const todo: Todo = { id, name: todoName, description: todoDesc, isDone: false };
+    this.listsCollection.doc(list.id).collection<Todo>("todos").doc(id).set(todo);
   }
 
   Delete(list: List) {
-    this.lists.splice(this.lists.indexOf(list), 1);
+    // this.lists.splice(this.lists.indexOf(list), 1);
+    this.afs.collection("lists").doc(list.id).delete();
   }
 
   DeleteTodo(list: List, todo: Todo) {
-    list.todos.splice(list.todos.indexOf(todo), 1);
+    this.afs.collection("lists").doc(list.id).collection("todos").doc(todo.id).delete();
   }
 
   private GetRandomColour(): string {

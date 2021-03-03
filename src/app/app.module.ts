@@ -18,6 +18,7 @@ import { CreateAccountComponent } from "./modals/create-account/create-account.c
 import { ChangeEmailComponent } from "./modals/change-email/change-email.component";
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,7 @@ import { ChangePasswordComponent } from "./modals/change-password/change-passwor
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAnalyticsModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
   ],
   providers: [
     StatusBar,

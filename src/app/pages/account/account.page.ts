@@ -9,6 +9,8 @@ import { ChangeEmailComponent } from 'src/app/modals/change-email/change-email.c
 import { CreateAccountComponent } from 'src/app/modals/create-account/create-account.component';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Capacitor, Plugins } from '@capacitor/core';
+const { NativeLinking } = Plugins;
 
 @Component({
   selector: "app-account",
@@ -21,6 +23,7 @@ export class AccountPage implements OnInit {
   public signInMethods: string[] = [];
   public emailVerified: boolean;
   public sendEmailVerificationClicked = false;
+  public isNative: boolean;
 
   constructor(
     private auth: AngularFireAuth,
@@ -36,6 +39,7 @@ export class AccountPage implements OnInit {
     await this.fetchUserEmail();
     await this.fetchConnectedAccount();
     this.emailVerified = this.currentUser.emailVerified;
+    this.isNative = Capacitor.isNative;
   }
 
   ionViewWillEnter() {
@@ -86,24 +90,51 @@ export class AccountPage implements OnInit {
   }
 
   private async linkWithSocial(social: string) {
+    // try {
+    //   const obj = { providerId: social };
+    //   Plugins.CapacitorFirebaseAuth.signIn(obj).then((result) => {
+    //     const credential = new firebase.auth.OAuthProvider(social).credential(
+    //       result.idToken
+    //     );
+    //     this.currentUser.linkWithCredential(credential);
+    //     this.fetchConnectedAccount();
+    //     this.loadingService.dismissLoading();
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    //   this.loadingService.dismissLoading();
+
+    //   switch (error.code) {
+    //     case "auth/popup-closed-by-user":
+    //       this.toastService.presentToast("La connexion a été annulée.");
+    //       console.log(
+    //         "Fenêtre fermée. Connexion OAuth annulée par l'utilisateur."
+    //       );
+    //       break;
+    //     default:
+    //       this.toastService.presentToastError(error.message);
+    //       console.log(error.code);
+    //       break;
+    //   }
+    // }
     try {
-      let provider = null;
-      this.loadingService.presentLoading("En attente…");
-      if (social === "google.com") {
-        provider = new firebase.auth.GoogleAuthProvider();
-        console.log("Linked with Google");
-      }
-      if (social === "github.com") {
-        provider = new firebase.auth.GithubAuthProvider();
-        console.log("Linked with GitHub");
-      } else if (social === "twitter.com") {
-        provider = new firebase.auth.TwitterAuthProvider();
-        console.log("Linked with Twitter");
-      } else if (social === "facebook.com") {
-        provider = new firebase.auth.FacebookAuthProvider();
-        console.log("Linked with Facebook");
-      }
-      await this.currentUser.linkWithPopup(provider);
+      NativeLinking.nativeLinkWith({providerId: "google.com"});
+      // let provider = null;
+      // this.loadingService.presentLoading("En attente…");
+      // if (social === "google.com") {
+      //   provider = new firebase.auth.GoogleAuthProvider();
+      //   console.log("Linked with Google");
+      // } else if (social === "github.com") {
+      //   provider = new firebase.auth.GithubAuthProvider();
+      //   console.log("Linked with GitHub");
+      // } else if (social === "twitter.com") {
+      //   provider = new firebase.auth.TwitterAuthProvider();
+      //   console.log("Linked with Twitter");
+      // } else if (social === "facebook.com") {
+      //   provider = new firebase.auth.FacebookAuthProvider();
+      //   console.log("Linked with Facebook");
+      // }
+      // await this.currentUser.linkWithRedirect(provider);
       await this.fetchConnectedAccount();
       this.loadingService.dismissLoading();
     } catch (error) {

@@ -30,11 +30,8 @@ export class CreateTodoComponent implements OnInit {
   onFormSubmit() {
     this.listService.CreateTodo(
       this.list,
-      new Todo(
-        this.todoForm.get("todoName").value,
-        this.todoForm.get("todoDesc").value,
-        false
-      )
+      this.todoForm.get("todoName").value,
+      this.todoForm.get("todoDesc").value,
     );
     this.modalController.dismiss();
   }

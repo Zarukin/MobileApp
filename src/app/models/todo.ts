@@ -1,6 +1,6 @@
 export class Todo {
   static LastId = 0;
-  id: number;
+  id: string;
   name: string;
   description: string;
   isDone: boolean;
@@ -9,6 +9,6 @@ export class Todo {
     this.name = name;
     this.description = description;
     this.isDone = isDone;
-    this.id = Todo.LastId++;
+    this.id = "";
   }
 }

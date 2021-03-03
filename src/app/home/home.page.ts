@@ -1,9 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { MenuController, ModalController } from "@ionic/angular";
-import { Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { CreateListComponent } from "../modals/create-list/create-list.component";
 import { List } from "../models/list";
 import { ListService } from "../services/list.service";
@@ -21,6 +22,8 @@ export class HomePage implements OnInit, OnDestroy {
   darkMode = false;
   verifiedEmail: boolean;
   userSub: Subscription;
+  private listsCollection: AngularFirestoreCollection<List>;
+  listsObservable: Observable<List[]>;
 
   constructor(
     public listService: ListService,
@@ -31,14 +34,22 @@ export class HomePage implements OnInit, OnDestroy {
     private menuController: MenuController,
     private loadingService: LoadingService,
     private toastService: ToastService,
-    private routeService: RoutingService
+    private routeService: RoutingService,
+    private afs: AngularFirestore
   ) {
-    this.lists = listService.GetAll();
+
   }
 
   ngOnInit() {
-    this.lists = this.listService.GetAll();
-
+    this.listsObservable = this.listService.GetAll();
+    this.listsObservable.subscribe((lists) => {
+      this.lists = lists;
+      lists.forEach(element => {
+        if (element.todos === undefined) {
+          element.todos = [];
+        }
+      });
+    });
     if (document.body.getAttribute("color-theme") === "light") {
       this.darkMode = false;
     } else if (document.body.getAttribute("color-theme") === "dark") {
@@ -75,7 +86,7 @@ export class HomePage implements OnInit, OnDestroy {
       cssClass: "my-custom-class",
     });
     modal.onDidDismiss().then((data) => {
-      this.lists = this.listService.GetAll();
+      this.listsObservable = this.listService.GetAll();
     });
     return await modal.present();
   }

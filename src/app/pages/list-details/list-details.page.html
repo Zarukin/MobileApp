@@ -23,7 +23,7 @@
           {{todo.name}}
           <p>{{todo.description}}</p>
         </ion-label>
-        <ion-checkbox class="casaco" color={{list.colour}} slot="end" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation()"></ion-checkbox>
+        <ion-checkbox class="casaco" color={{list.colour}} slot="end" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation(); onTodoUpdate(todo)"></ion-checkbox>
       </ion-item>
       
       <ion-item-options side="end">
