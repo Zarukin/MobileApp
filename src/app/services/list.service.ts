@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import { List } from "../models/list";
 import { Todo } from "../models/todo";
+import firebase from "firebase/app";
 
 @Injectable({
   providedIn: "root",
@@ -11,82 +13,120 @@ export class ListService {
   private lists: List[];
   private listsCollection: AngularFirestoreCollection<List>;
   listsObservable: Observable<List[]>;
+  private user: firebase.User;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
     this.lists = [];
-    /*const list1 = new List("Divers", [
-      new Todo(
-        "Faire les courses",
-        "- Fourme de Montbrison\n- Papier toilette\n- Morbier\n- Bulots",
-        false
-      ),
-      new Todo("Aller chercher les enfants à l'école", "À 16h30", true),
-    ]);
-    list1.colour = "primary";
-    const list2 = new List("Moutons", [
-      new Todo(
-        "Tondre les moutons",
-        "Ça fait 5 mois que Pedro n'a pas été tondu je pense qu'il est temps maintenant de récupérer sa laine. Je ferai aussi Isabelle au passage si j'ai le temps mais c'est pas sûr. Il me faudrait également de la laine noire donc la tonte de Dimitri est impérative.",
-        false
-      ),
-      new Todo("Vendre la laine au marché", "", false),
-    ]);
-    list2.colour = "danger";
-    const list3 = new List("Codes", [
-      new Todo("WiFi", "12345678910", false),
-      new Todo("Coffre", "abcd", true),
-      new Todo("Missiles nucléaires", "0000", true),
-      new Todo("Porte", "9876AB", true),
-      new Todo("Twitter", "ILoveMacron02", false),
-      new Todo("Banque", "MagnoliaForever", false),
-      new Todo("Ordinateur mezzanine", "ASSE<3", true),
-      new Todo("Portefeuille Bitcoin", "RPZ_Saint-Étienne42", true),
-      new Todo("Discord", "cpt.thomas!Sankara", false),
-      new Todo("Facebook", "facedebouc96", false),
-      new Todo("Bâtiment D", "45581236848413158685315656156", false),
-      new Todo("Dossier chiffré", "jean-luc_reichmann.je^t'aime", false),
-      new Todo("GitLab", "prolétairesdetouslespaysunissezvous!", false),
-      new Todo("Reddit", "j'aiplusd'inspi", false),
-    ]);
-    list3.colour = "warning";
-    this.lists.push(list1, list2, list3);*/
     this.listsCollection = this.afs.collection<List>("lists");
     this.listsObservable = this.listsCollection.valueChanges();
-    this.listsObservable.subscribe((lists) => {
-      this.lists = lists;
+    this.auth.currentUser.then((user) => {
+      this.user = user;
+      this.listsObservable.subscribe((lists) => {
+        lists.forEach(element => {
+          if (element.todos === undefined) {
+            element.todos = [];
+          }
+          if (element.canRead === undefined) {
+            element.canRead = [];
+          }
+          if (element.canWrite === undefined) {
+            element.canWrite = [];
+          }
+        });
+        this.lists = lists.filter((list) => {
+          return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
+           list.canWrite.indexOf(this.user.email) !== -1;
+        });
+      });
     });
   }
 
-  GetAll() {
+  GetAll(): Observable<List[]> {
     return this.listsObservable;
   }
 
-  GetOne(id: string) {
+  GetOne(id: string): List {
+    console.log(this.lists);
     return this.lists.find((list) => list.id === id);
   }
 
-  GetTodo(id: string) {
-    const currentList = this.lists.find((list) =>
-      list.todos.find((todo) => todo.id === id)
-    );
-    return {
-      todo: currentList.todos.find((todo) => todo.id === id),
-      currentList,
-    };
+  GetTodo(id: string, parentList: List): Todo {
+    // let todo: Todo;
+    // const todosObservable = this.listsCollection.doc(listId).collection<Todo>("todos").doc(id).valueChanges();
+    // const subscription = todosObservable.subscribe((fetchedTodo) => {
+    //   console.log(fetchedTodo);
+    //   todo = fetchedTodo;
+    //   return todo;
+    // });
+    // subscription.unsubscribe();
+    // return todo;
+
+    // let todosObservable: Observable<DocumentData[]>;
+    // const parentList$ = new Subject<List>();
+    // const queryObservable = parentList$.pipe(
+    //   switchMap(list =>
+    //     this.listsCollection.doc(list.id).collection("todos", ref => ref.where("id", "==", id)).valueChanges().pipe(
+    //       map(actions => actions.map(a => {
+    //         const data = a.payload.doc.data() as List;
+    //         const id = a.payload.doc.id;
+    //         console.log(data);
+    //         console.log(id);
+    //         // return { id, ...data };
+    //       }))
+    //     )
+    //   )
+    // );
+    // queryObservable.subscribe((queriedItems) => {
+    //   console.log(queriedItems);
+    // });
+    let todo: Todo;
+    todo = parentList.todos.find((td) => td.id === id);
+    console.log(todo);
+    // todosObservable.subscribe((todo) => {
+
+    // });
+    return todo;
   }
 
-  Create(listName: string) {
+  GetTodoObservable(list: List) {
+    let todosCollection: AngularFirestoreCollection<Todo>;
+    let todosObservable: Observable<Todo[]>;
+    todosCollection = this.afs.collection<List>("lists").doc(list.id).collection("todos");
+    todosObservable = todosCollection.valueChanges();
+    todosObservable.subscribe((todos) => {
+      list.todos = todos;
+      todos.forEach((todo) => {
+        const todoInList = list.todos.find((x) => x.id === todo.id);
+        if (todoInList === undefined) {
+          list.todos.push(todo);
+        } else {
+          todoInList.isDone = todo.isDone;
+          todoInList.name = todo.name;
+          todoInList.description = todo.description;
+        }
+      });
+    });
+    return todosObservable;
+  }
+
+  async Create(listName: string) {
     // list.colour = this.GetRandomColour();
     // this.lists.push(list);
     const id = this.afs.createId();
-    const list: List = { id, name: listName, colour: this.GetRandomColour()};
+    const email = this.user.email;
+    const list: List = { id, name: listName, colour: this.GetRandomColour(), owner: email };
     this.listsCollection.doc(id).set(list);
-    //this.listsCollection.doc(id).collection<Todo>("todos").add(new Todo("temp","yolo",true))
+    // this.listsCollection.doc(id).collection<Todo>("todos").add(new Todo("temp","yolo",true))
   }
 
   CreateTodo(list: List, todoName: string, todoDesc: string) {
     const id = this.afs.createId();
-    const todo: Todo = { id, name: todoName, description: todoDesc, isDone: false };
+    const todo: Todo = {
+      id,
+      name: todoName,
+      description: todoDesc,
+      isDone: false,
+    };
     this.listsCollection.doc(list.id).collection<Todo>("todos").doc(id).set(todo);
   }
 
@@ -100,16 +140,7 @@ export class ListService {
   }
 
   private GetRandomColour(): string {
-    const colourArray = [
-      "primary",
-      "secondary",
-      "tertiary",
-      "success",
-      "warning",
-      "danger",
-      "medium",
-      "dark",
-    ];
+    const colourArray = ["primary", "secondary", "tertiary", "success", "warning", "danger", "medium", "dark"];
     return colourArray[Math.floor(Math.random() * colourArray.length)];
   }
 }

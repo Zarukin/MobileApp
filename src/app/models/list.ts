@@ -6,11 +6,17 @@ export class List {
   name: string;
   todos?: Todo[];
   colour: string;
+  owner: string;
+  canRead?: string[];
+  canWrite?: string[];
 
-  constructor(name: string, todos: Todo[]) {
+  constructor(name: string, todos: Todo[], owner: string) {
     this.name = name;
     this.todos = todos;
     this.id = "";
     this.colour = "";
+    this.owner = owner;
+    this.canRead = [];
+    this.canWrite = [];
   }
 }

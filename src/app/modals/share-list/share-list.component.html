@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Partage de : {{list.name}}</ion-title>
+    <ion-buttons slot="end">
+      <form [formGroup]="shareForm" (ngSubmit)="onFormSubmit()">
+        <ion-button type="submit" fill="solid" color="success" [disabled]="!shareForm.valid">
+          Partager
+        </ion-button>
+      </form>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-text color="dark">
+    <h6>Partager une liste avec quelqu'un</h6>
+  </ion-text>
+  <p>Une liste partagée peut être consultée ou modifiée par les collaborateurs.</p>
+
+  <form [formGroup]="shareForm" (ngSubmit)="onFormSubmit()">
+    <ion-item lines="none">
+      <ion-label position="stacked">Courriel</ion-label>
+      <ion-input type="text" formControlName="shareEmail" autofocus="true" required></ion-input>
+    </ion-item>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Option de partage</ion-label>
+      <ion-select interface="popover" formControlName="shareRW">
+            <ion-select-option value="read">Lecture seule</ion-select-option>
+            <ion-select-option value="write">Lecture / Écriture</ion-select-option>
+          </ion-select>
+    </ion-item>
+  </ion-list>
+
+  </form>
+</ion-content>

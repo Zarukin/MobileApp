@@ -22,7 +22,6 @@ export class HomePage implements OnInit, OnDestroy {
   darkMode = false;
   verifiedEmail: boolean;
   userSub: Subscription;
-  private listsCollection: AngularFirestoreCollection<List>;
   listsObservable: Observable<List[]>;
 
   constructor(
@@ -36,20 +35,28 @@ export class HomePage implements OnInit, OnDestroy {
     private toastService: ToastService,
     private routeService: RoutingService,
     private afs: AngularFirestore
-  ) {
+  ) {}
 
-  }
-
-  ngOnInit() {
+  async ngOnInit() {
     this.listsObservable = this.listService.GetAll();
-    this.listsObservable.subscribe((lists) => {
-      this.lists = lists;
+    this.listsObservable.subscribe(async (lists) => {
+      const user = await this.auth.currentUser;
       lists.forEach(element => {
         if (element.todos === undefined) {
           element.todos = [];
         }
+        if (element.canRead === undefined) {
+          element.canRead = [];
+        }
+        if (element.canWrite === undefined) {
+          element.canWrite = [];
+        }
+      });
+      this.lists = lists.filter((list) => {
+        return list.owner === user.email || list.canRead.indexOf(user.email) !== -1 || list.canWrite.indexOf(user.email) !== -1;
       });
     });
+
     if (document.body.getAttribute("color-theme") === "light") {
       this.darkMode = false;
     } else if (document.body.getAttribute("color-theme") === "dark") {

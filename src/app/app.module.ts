@@ -17,6 +17,7 @@ import { environment } from "src/environments/environment";
 import { CreateAccountComponent } from "./modals/create-account/create-account.component";
 import { ChangeEmailComponent } from "./modals/change-email/change-email.component";
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
+import { ShareListComponent } from "./modals/share-list/share-list.component";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ChangePasswordComponent } from "./modals/change-password/change-passwor
     CreateAccountComponent,
     ChangeEmailComponent,
     ChangePasswordComponent,
+    ShareListComponent,
   ],
   entryComponents: [],
   imports: [
