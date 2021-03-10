@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
@@ -10,6 +10,8 @@ import { List } from "src/app/models/list";
 import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 import { AngularFireAuth } from "@angular/fire/auth";
+import firebase from "firebase/app";
+
 @Component({
   selector: "app-list-details",
   templateUrl: "./list-details.page.html",
@@ -20,6 +22,8 @@ export class ListDetailsPage implements OnInit {
   private todosCollection: AngularFirestoreCollection<Todo>;
   private todosObservable: Observable<Todo[]>;
   public user: firebase.User;
+  public isDisabled: boolean;
+
   constructor(
     public route: ActivatedRoute,
     public listServices: ListService,
@@ -38,16 +42,17 @@ export class ListDetailsPage implements OnInit {
     this.todosObservable = this.todosCollection.valueChanges();
     this.todosObservable.subscribe((todos) => {
       todos.forEach((todo) => {
-        const todoInList = this.list.todos.find(x => x.id === todo.id );
-        if (todoInList === undefined ) {
+        const todoInList = this.list.todos.find((x) => x.id === todo.id);
+        if (todoInList === undefined) {
           this.list.todos.push(todo);
         } else {
           todoInList.isDone = todo.isDone;
           todoInList.name = todo.name;
-          todoInList.description = todoInList.description;
+          todoInList.description = todo.description;
         }
       });
     });
+    this.shouldDisable();
   }
 
   ionViewWillEnter() {
@@ -55,8 +60,8 @@ export class ListDetailsPage implements OnInit {
   }
 
   updateIsDone(todo: Todo) {
-    if (this.user !== undefined  && (this.list.owner === this.user.email || this.list.canWrite.indexOf(this.user) !== -1)) {
-    this.afs.collection("lists").doc(this.list.id).collection("todos").doc(todo.id).update({ isDone: !todo.isDone });
+    if (this.user !== undefined && (this.list.owner === this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1)) {
+      this.afs.collection("lists").doc(this.list.id).collection("todos").doc(todo.id).update({ isDone: !todo.isDone });
     }
   }
 
@@ -89,5 +94,23 @@ export class ListDetailsPage implements OnInit {
 
   share() {
     this.presentModalShare();
+  }
+
+  shouldDisable() {
+    if (this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1)) {
+      console.log(this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1));
+      console.log(this.user !== undefined);
+      console.log((this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1));
+      console.log(this.list.owner !== this.user.email);
+      console.log(this.list.canWrite.indexOf(this.user.email) !== -1);
+      this.isDisabled = true;
+    } else {
+      this.isDisabled = false;
+      console.log(this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1));
+      console.log(this.user !== undefined);
+      console.log(this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1);
+      console.log(this.list.owner !== this.user.email);
+      console.log(this.list.canWrite.indexOf(this.user.email) !== -1);
+    }
   }
 }

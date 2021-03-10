@@ -5,7 +5,7 @@
         <ion-icon name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Partage de : {{list.name}}</ion-title>
+    <ion-title>Partage de : {{list.name}}</ion-title>
     <ion-buttons slot="end">
       <form [formGroup]="shareForm" (ngSubmit)="onFormSubmit()">
         <ion-button type="submit" fill="solid" color="success" [disabled]="!shareForm.valid">
@@ -21,7 +21,7 @@
   <ion-text color="dark">
     <h6>Partager une liste avec quelqu'un</h6>
   </ion-text>
-  <p>Une liste partagée peut être consultée ou modifiée par les collaborateurs.</p>
+  <p>Une liste partagée peut être consultée ou modifiée par les personnes invitées. Il suffit de définir les options de partages correspondantes.</p>
 
   <form [formGroup]="shareForm" (ngSubmit)="onFormSubmit()">
     <ion-item lines="none">
@@ -29,7 +29,6 @@
       <ion-input type="text" formControlName="shareEmail" autofocus="true" required></ion-input>
     </ion-item>
 
-  <ion-list>
     <ion-item>
       <ion-label>Option de partage</ion-label>
       <ion-select interface="popover" formControlName="shareRW">
@@ -37,7 +36,6 @@
             <ion-select-option value="write">Lecture / Écriture</ion-select-option>
           </ion-select>
     </ion-item>
-  </ion-list>
 
   </form>
 </ion-content>

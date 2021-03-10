@@ -6,6 +6,7 @@ import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
+import firebase from "firebase/app";
 
 @Component({
   selector: "app-todo-details",
@@ -15,7 +16,9 @@ import { AngularFireAuth } from "@angular/fire/auth";
 export class TodoDetailsPage implements OnInit {
   public todo: Todo;
   public parentList: List;
-  private user: firebase.User;
+  public user: firebase.User;
+  public isDisabled: boolean;
+  public isReadonly: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -25,10 +28,9 @@ export class TodoDetailsPage implements OnInit {
     private afs: AngularFirestore
   ) {}
 
-   ngOnInit() {
+  async ngOnInit() {
     const id = this.route.snapshot.paramMap.get("id");
     let listId;
-    this.user =  this.auth.currentUser;
     this.route.queryParams.subscribe((params) => {
       listId = params['list'];
     });
@@ -36,6 +38,8 @@ export class TodoDetailsPage implements OnInit {
     console.log(this.parentList);
     this.todo = this.listServices.GetTodo(id, this.parentList);
     console.log(this.todo);
+    this.user = await this.auth.currentUser;
+    this.shouldDisable();
   }
 
   ionViewWillEnter() {
@@ -58,4 +62,17 @@ export class TodoDetailsPage implements OnInit {
     }
   }
 
+  shouldDisable() {
+    if (this.user !== undefined && this.parentList.canRead.indexOf(this.user.email) === -1) {
+      this.isDisabled = false;
+    } else {
+      this.isDisabled = true;
+    }
+
+    if (this.user !== undefined && this.parentList.canRead.indexOf(this.user.email) === -1) {
+      this.isReadonly = false;
+    } else {
+      this.isReadonly = true;
+    }
+  }
 }

@@ -6,7 +6,7 @@
     <ion-title>{{list.name}}</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="user !== undefined  && list.owner === user.email" (click)="share()">
-        <ion-icon name="share-social"></ion-icon>
+        <ion-icon slot="icon-only" name="share-social"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -28,7 +28,7 @@
           {{todo.name}}
           <p>{{todo.description}}</p>
         </ion-label>
-        <ion-checkbox class="casaco" color={{list.colour}}  slot="end" value="todo.isDone"  (click)="$event.stopPropagation(); updateIsDone(todo)" disabled="user !== undefined  && (list.owner === user.email || list.canWrite.indexOf(user) !== -1)"></ion-checkbox>
+        <ion-checkbox class="casaco" color={{list.colour}}  slot="end" value="todo.isDone" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation(); updateIsDone(todo)" [attr.disabled]="isDisabled ? true: null"></ion-checkbox>
       </ion-item>
       
       <ion-item-options side="end">
@@ -40,7 +40,7 @@
   </ion-list>
 </ion-content>
 
-<ion-fab *ngIf="user !== undefined  && (list.owner === user.email || list.canWrite.indexOf(user) !== -1)" vertical="bottom" horizontal="end" slot="fixed">
+<ion-fab *ngIf="user !== undefined  && (list.owner === user.email || list.canWrite.indexOf(user.email) !== -1)" vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button (click)="presentModalTodo()" color={{list.colour}}>
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>

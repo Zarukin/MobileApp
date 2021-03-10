@@ -16,7 +16,7 @@ export class ShareListComponent implements OnInit {
   constructor(public modalController: ModalController, public fb: FormBuilder, private afs: AngularFirestore ){
     this.shareForm = this.fb.group({
       shareEmail: ["", Validators.required],
-      shareRW: [""],
+      shareRW: ["", Validators.required],
     });
   }
 
