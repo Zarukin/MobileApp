@@ -29,13 +29,51 @@
       <ion-input type="text" formControlName="shareEmail" autofocus="true" required></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Option de partage</ion-label>
-      <ion-select interface="popover" formControlName="shareRW">
+    <ion-item lines="none">
+      <ion-label position="stacked">Option de partage</ion-label>
+      <ion-select interface="popover" formControlName="shareRW" placeholder="Sélectionnez une option">
             <ion-select-option value="read">Lecture seule</ion-select-option>
             <ion-select-option value="write">Lecture / Écriture</ion-select-option>
           </ion-select>
     </ion-item>
+
+    <hr>
+
+    <ion-text color="dark">
+      <h6>Collaborateurs de la liste</h6>
+    </ion-text>
+    <p>Liste des personnes avec qui la liste a été partagée. Pour retirer l'accès à quelqu'un il suffit de décocher la case à côté de son courriel.</p>
+
+    <ion-list>
+      <ion-item *ngFor="let allowedEmail of canRWR.get('canRead')">
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        <ion-chip color="secondary" slot="end" (click)="triggerSwitchToWrite(allowedEmail)">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <ion-label>Lecture</ion-label>
+        </ion-chip>
+        <ion-label>{{allowedEmail}}</ion-label>
+        <ion-checkbox checked="true" slot="end" (ionChange)="handleSharedRead(allowedEmail, $event)"></ion-checkbox>
+        <!-- another checkbox otherwise item clicks triggers checkbox click -->
+        <ion-checkbox hidden=true ></ion-checkbox>
+      </ion-item>
+      <ion-item *ngFor="let allowedEmail of canRWR.get('canWrite')">
+        <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+        <ion-chip color="success" slot="end" (click)="triggerSwitchToRead(allowedEmail)">
+          <ion-icon name="create-outline"></ion-icon>
+          <ion-label>Écriture</ion-label>
+        </ion-chip>
+        <ion-label>{{allowedEmail}}</ion-label>
+        <ion-checkbox checked="true" slot="end" (ionChange)="handleSharedWrite(allowedEmail, $event)"></ion-checkbox>
+        <!-- another checkbox otherwise item clicks triggers checkbox click -->
+        <ion-checkbox hidden=true ></ion-checkbox>
+      </ion-item>
+    </ion-list>
+
+    <div class="empty-list" *ngIf="canRWR.get('canRead').length == 0 && canRWR.get('canWrite').length == 0">
+      <ion-icon name="file-tray-outline"></ion-icon>
+      <h4>C'est vide ici…</h4>
+      <ion-text>Invitez d'abord d'autres personnes à consulter votre liste.</ion-text>
+    </div>
 
   </form>
 </ion-content>

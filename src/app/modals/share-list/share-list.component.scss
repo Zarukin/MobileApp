@@ -1,4 +1,4 @@
-ion-input, ion-textarea {
+ion-input, ion-textarea, ion-select {
   margin-top: 10px;
   border-radius: 5px;
   --padding-start: 10px !important;
@@ -11,6 +11,14 @@ ion-input, ion-textarea {
 
 :host-context(body[color-theme="dark"]) ion-input, :host-context(body[color-theme="dark"]) ion-textarea {
   --background: #1e1e1e;
+}
+
+:host-context(body[color-theme="light"]) ion-select {
+  background: rgb(240, 240, 240);
+}
+
+:host-context(body[color-theme="dark"]) ion-select {
+  background: #1e1e1e;
 }
 
 ion-item {
@@ -61,4 +69,23 @@ p b {
 
 ion-item {
   margin-bottom: 20px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--ion-color-medium);
+    overflow: visible;
+    text-align: center;
+    height: 10px;
+}
+
+.empty-list {
+  text-align: center;
+  color: var(--ion-color-light-shade);
+  padding: 0 50px;
+}
+
+.empty-list ion-icon {
+  width: 100px;
+  height: 100px;
 }
