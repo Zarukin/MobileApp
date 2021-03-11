@@ -18,6 +18,7 @@ import { CreateAccountComponent } from "./modals/create-account/create-account.c
 import { ChangeEmailComponent } from "./modals/change-email/change-email.component";
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
 import { ShareListComponent } from "./modals/share-list/share-list.component";
+import { ListSettingsComponent } from "./modals/list-settings/list-settings.component";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ShareListComponent } from "./modals/share-list/share-list.component";
     ChangeEmailComponent,
     ChangePasswordComponent,
     ShareListComponent,
+    ListSettingsComponent
   ],
   entryComponents: [],
   imports: [

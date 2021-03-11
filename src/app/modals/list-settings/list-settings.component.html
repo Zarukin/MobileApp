@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Paramètres de la liste</ion-title>
+    <ion-buttons slot="end">
+      <form [formGroup]="listSettingsForm" (ngSubmit)="onFormSubmit()">
+        <ion-button type="submit" fill="solid" color="success" [disabled]="!listSettingsForm.valid">
+          Modifier
+        </ion-button>
+      </form>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-text color="dark">
+    <h6>Modifier le nom ou la couleur de la liste</h6>
+  </ion-text>
+  <p>Vous pouvez changer le nom de votre liste. Vous pouvez également modifier sa couleur.</p>
+
+  <form [formGroup]="listSettingsForm" (ngSubmit)="onFormSubmit()">
+    <ion-item lines="none">
+      <ion-label position="stacked">Nom</ion-label>
+      <ion-input type="text" formControlName="newListName" autofocus="true" required></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Couleur</ion-label>
+      <ion-select value="" formControlName="listColour" cancelText="Annuler" okText="Confirmer" required>
+        <ion-select-option value="primary">Bleu</ion-select-option>
+        <ion-select-option value="secondary">Bleu ciel</ion-select-option>
+        <ion-select-option value="tertiary">Violet</ion-select-option>
+        <ion-select-option value="success">Vert</ion-select-option>
+        <ion-select-option value="warning">Jaune</ion-select-option>
+        <ion-select-option value="danger">Rouge</ion-select-option>
+        <ion-select-option value="medium">Gris</ion-select-option>
+        <ion-select-option value="dark">Noir</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </form>
+</ion-content>

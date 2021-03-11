@@ -12,6 +12,7 @@ import { LoadingService } from "../services/loading.service";
 import { RoutingService } from "../services/routing.service";
 import { ToastService } from "../services/toast.service";
 import firebase from "firebase/app";
+import { ListSettingsComponent } from "../modals/list-settings/list-settings.component";
 
 @Component({
   selector: "app-home",
@@ -54,7 +55,7 @@ export class HomePage implements OnInit, OnDestroy {
     this.listSub = this.listsObservable.subscribe(async (lists) => {
       console.log(lists);
       const user = this.currentUser;
-      lists.forEach(element => {
+      lists.forEach((element) => {
         if (element.todos === undefined) {
           element.todos = [];
         }
@@ -93,6 +94,21 @@ export class HomePage implements OnInit, OnDestroy {
   public async presentModalList() {
     const modal = await this.modalController.create({
       component: CreateListComponent,
+      swipeToClose: true,
+      cssClass: "my-custom-class",
+    });
+    modal.onDidDismiss().then((data) => {
+      this.listsObservable = this.listService.GetAll();
+    });
+    return await modal.present();
+  }
+
+  public async presentModalListSetting(list: List) {
+    const modal = await this.modalController.create({
+      component: ListSettingsComponent,
+      componentProps: { 
+        list,
+      },
       swipeToClose: true,
       cssClass: "my-custom-class",
     });

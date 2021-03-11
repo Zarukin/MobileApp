@@ -44,13 +44,18 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let list of lists">
-        <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
-          <ion-label>{{list.name}}</ion-label>
-          <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge>
-        </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="primary" (click)="presentModalListSetting(list)" >
+          <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
+        <ion-label>{{list.name}}</ion-label>
+        <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge>
+      </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteList(list)" >
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
