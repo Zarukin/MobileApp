@@ -51,40 +51,9 @@ export class ListService {
   }
 
   GetTodo(id: string, parentList: List): Todo {
-    // let todo: Todo;
-    // const todosObservable = this.listsCollection.doc(listId).collection<Todo>("todos").doc(id).valueChanges();
-    // const subscription = todosObservable.subscribe((fetchedTodo) => {
-    //   console.log(fetchedTodo);
-    //   todo = fetchedTodo;
-    //   return todo;
-    // });
-    // subscription.unsubscribe();
-    // return todo;
-
-    // let todosObservable: Observable<DocumentData[]>;
-    // const parentList$ = new Subject<List>();
-    // const queryObservable = parentList$.pipe(
-    //   switchMap(list =>
-    //     this.listsCollection.doc(list.id).collection("todos", ref => ref.where("id", "==", id)).valueChanges().pipe(
-    //       map(actions => actions.map(a => {
-    //         const data = a.payload.doc.data() as List;
-    //         const id = a.payload.doc.id;
-    //         console.log(data);
-    //         console.log(id);
-    //         // return { id, ...data };
-    //       }))
-    //     )
-    //   )
-    // );
-    // queryObservable.subscribe((queriedItems) => {
-    //   console.log(queriedItems);
-    // });
     let todo: Todo;
     todo = parentList.todos.find((td) => td.id === id);
     console.log(todo);
-    // todosObservable.subscribe((todo) => {
-
-    // });
     return todo;
   }
 
@@ -113,8 +82,6 @@ export class ListService {
   }
 
   async Create(listName: string) {
-    // list.colour = this.GetRandomColour();
-    // this.lists.push(list);
     const id = this.afs.createId();
     const email = this.user.email;
     const list: List = {
@@ -125,7 +92,6 @@ export class ListService {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
     this.listsCollection.doc(id).set(list);
-    // this.listsCollection.doc(id).collection<Todo>("todos").add(new Todo("temp","yolo",true))
   }
 
   CreateTodo(list: List, todoName: string, todoDesc: string) {
@@ -141,7 +107,6 @@ export class ListService {
   }
 
   Delete(list: List) {
-    // this.lists.splice(this.lists.indexOf(list), 1);
     this.afs.collection("lists").doc(list.id).delete();
   }
 

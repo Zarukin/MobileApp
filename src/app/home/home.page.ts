@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { MenuController, ModalController } from "@ionic/angular";
@@ -47,9 +47,6 @@ export class HomePage implements OnInit, OnDestroy {
         this.currentUser = user;
         this.verifiedEmail = user.emailVerified;
         console.log("Is the email verified ? " + this.verifiedEmail);
-        if (!this.verifiedEmail && this.routeService.getPreviousRoute() !== "/register") {
-          // this.toastService.presentToastForEmailConfirmation();
-        }
       }
     });
 

@@ -4,7 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { List } from "src/app/models/list";
 import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
-import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
 import firebase from "firebase/app";
 
