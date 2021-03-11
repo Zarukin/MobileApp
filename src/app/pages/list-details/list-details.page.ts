@@ -38,7 +38,10 @@ export class ListDetailsPage implements OnInit {
     this.list = this.listServices.GetOne(id);
     this.list.todos = [];
     this.user = await this.auth.currentUser;
-    this.todosCollection = this.afs.collection<List>("lists").doc(this.list.id).collection("todos");
+    this.todosCollection = this.afs
+      .collection<List>("lists")
+      .doc(this.list.id)
+      .collection("todos", (ref) => ref.orderBy("timestamp", "asc"));
     this.todosObservable = this.todosCollection.valueChanges();
     this.todosObservable.subscribe((todos) => {
       todos.forEach((todo) => {
