@@ -98,19 +98,9 @@ export class ListDetailsPage implements OnInit {
 
   shouldDisable() {
     if (this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1)) {
-      console.log(this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1));
-      console.log(this.user !== undefined);
-      console.log((this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1));
-      console.log(this.list.owner !== this.user.email);
-      console.log(this.list.canWrite.indexOf(this.user.email) !== -1);
       this.isDisabled = true;
     } else {
       this.isDisabled = false;
-      console.log(this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1));
-      console.log(this.user !== undefined);
-      console.log(this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1);
-      console.log(this.list.owner !== this.user.email);
-      console.log(this.list.canWrite.indexOf(this.user.email) !== -1);
     }
   }
 }

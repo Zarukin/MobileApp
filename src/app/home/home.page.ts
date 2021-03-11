@@ -11,6 +11,7 @@ import { ListService } from "../services/list.service";
 import { LoadingService } from "../services/loading.service";
 import { RoutingService } from "../services/routing.service";
 import { ToastService } from "../services/toast.service";
+import firebase from "firebase/app";
 
 @Component({
   selector: "app-home",
@@ -21,7 +22,9 @@ export class HomePage implements OnInit, OnDestroy {
   @Input() lists: List[];
   darkMode = false;
   verifiedEmail: boolean;
+  currentUser: firebase.User;
   userSub: Subscription;
+  listSub: Subscription;
   listsObservable: Observable<List[]>;
 
   constructor(
@@ -37,10 +40,23 @@ export class HomePage implements OnInit, OnDestroy {
     private afs: AngularFirestore
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.routeService.subscribeRoute();
+    this.userSub = this.auth.user.subscribe((user) => {
+      if (user) {
+        this.currentUser = user;
+        this.verifiedEmail = user.emailVerified;
+        console.log("Is the email verified ? " + this.verifiedEmail);
+        if (!this.verifiedEmail && this.routeService.getPreviousRoute() !== "/register") {
+          // this.toastService.presentToastForEmailConfirmation();
+        }
+      }
+    });
+
     this.listsObservable = this.listService.GetAll();
-    this.listsObservable.subscribe(async (lists) => {
-      const user = await this.auth.currentUser;
+    this.listSub = this.listsObservable.subscribe(async (lists) => {
+      console.log(lists);
+      const user = this.currentUser;
       lists.forEach(element => {
         if (element.todos === undefined) {
           element.todos = [];
@@ -51,10 +67,14 @@ export class HomePage implements OnInit, OnDestroy {
         if (element.canWrite === undefined) {
           element.canWrite = [];
         }
+        this.listService.GetTodoObservable(element).subscribe((todos) => {
+          element.todos = todos;
+        });
       });
       this.lists = lists.filter((list) => {
         return list.owner === user.email || list.canRead.indexOf(user.email) !== -1 || list.canWrite.indexOf(user.email) !== -1;
       });
+      console.log(this.lists);
     });
 
     if (document.body.getAttribute("color-theme") === "light") {
@@ -62,24 +82,11 @@ export class HomePage implements OnInit, OnDestroy {
     } else if (document.body.getAttribute("color-theme") === "dark") {
       this.darkMode = true;
     }
-
-    this.routeService.subscribeRoute();
-    this.userSub = this.auth.user.subscribe((user) => {
-      if (user) {
-        this.verifiedEmail = user.emailVerified;
-        console.log("Is the email verified ? " + this.verifiedEmail);
-        if (
-          !this.verifiedEmail &&
-          this.routeService.getPreviousRoute() !== "/register"
-        ) {
-          // this.toastService.presentToastForEmailConfirmation();
-        }
-      }
-    });
   }
 
   ngOnDestroy() {
     this.userSub.unsubscribe();
+    this.listSub.unsubscribe();
   }
 
   ionViewWillEnter() {

@@ -65,13 +65,9 @@ export class TodoDetailsPage implements OnInit {
   shouldDisable() {
     if (this.user !== undefined && this.parentList.canRead.indexOf(this.user.email) === -1) {
       this.isDisabled = false;
-    } else {
-      this.isDisabled = true;
-    }
-
-    if (this.user !== undefined && this.parentList.canRead.indexOf(this.user.email) === -1) {
       this.isReadonly = false;
     } else {
+      this.isDisabled = true;
       this.isReadonly = true;
     }
   }
