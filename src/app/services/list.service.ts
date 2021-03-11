@@ -17,7 +17,7 @@ export class ListService {
 
   constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
     this.lists = [];
-    this.listsCollection = this.afs.collection<List>("lists");
+    this.listsCollection = this.afs.collection<List>("lists", ref => ref.orderBy("timestamp", "asc"));
     this.listsObservable = this.listsCollection.valueChanges();
     this.auth.currentUser.then((user) => {
       this.user = user;
@@ -91,7 +91,10 @@ export class ListService {
   GetTodoObservable(list: List) {
     let todosCollection: AngularFirestoreCollection<Todo>;
     let todosObservable: Observable<Todo[]>;
-    todosCollection = this.afs.collection<List>("lists").doc(list.id).collection("todos");
+    todosCollection = this.afs
+      .collection<List>("lists")
+      .doc(list.id)
+      .collection("todos", (ref) => ref.orderBy("timestamp", "asc"));
     todosObservable = todosCollection.valueChanges();
     todosObservable.subscribe((todos) => {
       list.todos = todos;
@@ -114,7 +117,13 @@ export class ListService {
     // this.lists.push(list);
     const id = this.afs.createId();
     const email = this.user.email;
-    const list: List = { id, name: listName, colour: this.GetRandomColour(), owner: email };
+    const list: List = {
+      id,
+      name: listName,
+      colour: this.GetRandomColour(),
+      owner: email,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
     this.listsCollection.doc(id).set(list);
     // this.listsCollection.doc(id).collection<Todo>("todos").add(new Todo("temp","yolo",true))
   }
@@ -126,6 +135,7 @@ export class ListService {
       name: todoName,
       description: todoDesc,
       isDone: false,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
     this.listsCollection.doc(list.id).collection<Todo>("todos").doc(id).set(todo);
   }
