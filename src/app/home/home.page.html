@@ -44,7 +44,7 @@
 
   <ion-list>
     <ion-item-sliding *ngFor="let list of lists">
-      <ion-item-options side="start">
+      <ion-item-options side="start" *ngIf="currentUser !== undefined && list.owner === currentUser.email || list.canWrite.indexOf(this.currentUser.email) !== -1">
         <ion-item-option color="primary" (click)="presentModalListSetting(list)" >
           <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
         </ion-item-option>
@@ -54,7 +54,7 @@
         <ion-icon name="people-outline" slot="end" *ngIf="list.canRead.length > 0 || list.canWrite.length > 0"></ion-icon>
         <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge>
       </ion-item>
-      <ion-item-options side="end">
+      <ion-item-options side="end" *ngIf="currentUser !== undefined && list.owner === currentUser.email || list.canWrite.indexOf(this.currentUser.email) !== -1">
         <ion-item-option color="danger" (click)="deleteList(list)" >
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-item-option>

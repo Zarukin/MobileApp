@@ -31,7 +31,7 @@
         <ion-checkbox class="casaco" color={{list.colour}}  slot="end" value="todo.isDone" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation(); updateIsDone(todo)" [attr.disabled]="isDisabled ? true: null"></ion-checkbox>
       </ion-item>
       
-      <ion-item-options side="end">
+      <ion-item-options side="end" *ngIf="!isDisabled">
         <ion-item-option color="danger" (click)="deleteTodo(todo)">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>

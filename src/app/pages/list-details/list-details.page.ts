@@ -100,7 +100,7 @@ export class ListDetailsPage implements OnInit {
   }
 
   shouldDisable() {
-    if (this.user !== undefined && (this.list.owner !== this.user.email || this.list.canWrite.indexOf(this.user.email) !== -1)) {
+    if (this.user !== undefined && this.list.owner !== this.user.email && this.list.canWrite.indexOf(this.user.email) === -1) {
       this.isDisabled = true;
     } else {
       this.isDisabled = false;

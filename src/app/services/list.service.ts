@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { List } from "../models/list";
 import { Todo } from "../models/todo";
 import firebase from "firebase/app";
@@ -14,31 +14,37 @@ export class ListService {
   private listsCollection: AngularFirestoreCollection<List>;
   listsObservable: Observable<List[]>;
   private user: firebase.User;
+  private userSub: Subscription;
 
   constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
     this.lists = [];
     this.listsCollection = this.afs.collection<List>("lists", ref => ref.orderBy("timestamp", "asc"));
     this.listsObservable = this.listsCollection.valueChanges();
-    this.auth.currentUser.then((user) => {
-      this.user = user;
-      this.listsObservable.subscribe((lists) => {
-        lists.forEach(element => {
-          if (element.todos === undefined) {
-            element.todos = [];
-          }
-          if (element.canRead === undefined) {
-            element.canRead = [];
-          }
-          if (element.canWrite === undefined) {
-            element.canWrite = [];
-          }
-        });
-        this.lists = lists.filter((list) => {
-          return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
-           list.canWrite.indexOf(this.user.email) !== -1;
-        });
+    this.userSub = this.auth.user.subscribe((user) => {
+      if (user) {
+        this.user = user;
+      }
+    });
+    // this.auth.currentUser.then((user) => {
+    //   this.user = user;
+    this.listsObservable.subscribe((lists) => {
+      lists.forEach(element => {
+        if (element.todos === undefined) {
+          element.todos = [];
+        }
+        if (element.canRead === undefined) {
+          element.canRead = [];
+        }
+        if (element.canWrite === undefined) {
+          element.canWrite = [];
+        }
+      });
+      this.lists = lists.filter((list) => {
+        return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
+          list.canWrite.indexOf(this.user.email) !== -1;
       });
     });
+    // });
   }
 
   GetAll(): Observable<List[]> {
