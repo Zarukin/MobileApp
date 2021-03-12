@@ -106,7 +106,7 @@ export class HomePage implements OnInit, OnDestroy {
   public async presentModalListSetting(list: List) {
     const modal = await this.modalController.create({
       component: ListSettingsComponent,
-      componentProps: { 
+      componentProps: {
         list,
       },
       swipeToClose: true,
