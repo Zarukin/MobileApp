@@ -86,3 +86,110 @@ hr {
   width: 100px;
   height: 100px;
 }
+
+.ion-align-items-center {
+  text-align: center;
+}
+
+.blue-primary {
+  --color: var(--ion-color-primary);
+  --color-checked: var(--ion-color-primary);
+  width: 40px;
+  height: 40px;
+}
+
+.blue-secondary {
+  --color: var(--ion-color-secondary);
+  --color-checked: var(--ion-color-secondary);
+  width: 40px;
+  height: 40px;
+}
+
+.purple-tertiary {
+  --color: var(--ion-color-tertiary);
+  --color-checked: var(--ion-color-tertiary);
+  width: 40px;
+  height: 40px;
+}
+
+.green-success {
+  --color: var(--ion-color-success);
+  --color-checked: var(--ion-color-success);
+  width: 40px;
+  height: 40px;
+}
+
+.yellow-warning {
+  --color: var(--ion-color-warning);
+  --color-checked: var(--ion-color-warning);
+  width: 40px;
+  height: 40px;
+}
+
+.red-danger {
+  --color: var(--ion-color-danger);
+  --color-checked: var(--ion-color-danger);
+  width: 40px;
+  height: 40px;
+}
+
+.gray-medium {
+  --color: var(--ion-color-medium);
+  --color-checked: var(--ion-color-medium);
+  width: 40px;
+  height: 40px;
+}
+
+.black-dark {
+  --color: var(--ion-color-dark);
+  --color-checked: var(--ion-color-dark);
+  width: 40px;
+  height: 40px;
+}
+
+.blue-primary::part(container) {
+  background: var(--ion-color-primary);
+}
+
+.blue-secondary::part(container) {
+  background: var(--ion-color-secondary);
+}
+
+.purple-tertiary::part(container) {
+  background: var(--ion-color-tertiary);
+}
+
+.green-success::part(container) {
+  background: var(--ion-color-success);
+}
+
+.yellow-warning::part(container) {
+  background: var(--ion-color-warning);
+}
+
+.red-danger::part(container) {
+  background: var(--ion-color-danger);
+}
+
+.gray-medium::part(container) {
+  background: var(--ion-color-medium);
+}
+
+.black-dark::part(container) {
+  background: var(--ion-color-dark);
+}
+
+ion-radio::part(mark) {
+  // background: var(--ion-color-light);
+}
+
+ion-radio::part(mark) {
+  content: ""
+}
+
+ion-radio::part(mark) {
+  content: url(checkmark-outline.svg);
+  color: var(--ion-color-light);
+  width: 30px;
+  height: 30px;
+}

@@ -30,16 +30,39 @@
     </ion-item>
     <ion-item lines="none">
       <ion-label position="stacked">Couleur</ion-label>
-      <ion-select value="" formControlName="listColour" cancelText="Annuler" okText="Confirmer" required>
-        <ion-select-option value="primary">Bleu</ion-select-option>
-        <ion-select-option value="secondary">Bleu ciel</ion-select-option>
-        <ion-select-option value="tertiary">Violet</ion-select-option>
-        <ion-select-option value="success">Vert</ion-select-option>
-        <ion-select-option value="warning">Jaune</ion-select-option>
-        <ion-select-option value="danger">Rouge</ion-select-option>
-        <ion-select-option value="medium">Gris</ion-select-option>
-        <ion-select-option value="dark">Noir</ion-select-option>
-      </ion-select>
     </ion-item>
+    <ion-grid>
+      <ion-radio-group value="" formControlName="listColour">
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <ion-radio class="blue-primary" mode="md" value="primary"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="blue-secondary" mode="md" value="secondary"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="purple-tertiary" mode="md" value="tertiary"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="green-success" mode="md" value="success"></ion-radio>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <ion-radio class="yellow-warning" mode="md" value="warning"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="red-danger" mode="md" value="danger"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="gray-medium" mode="md" value="medium"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="black-dark" mode="md" value="dark"></ion-radio>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-grid>
   </form>
 </ion-content>
