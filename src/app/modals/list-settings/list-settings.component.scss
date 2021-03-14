@@ -189,7 +189,10 @@ ion-radio::part(mark) {
 
 ion-radio::part(mark) {
   content: url(checkmark-outline.svg);
-  color: var(--ion-color-light);
   width: 30px;
   height: 30px;
+}
+
+ion-radio.yellow-warning::part(mark), :host-context(body[color-theme="dark"]) ion-radio.black-dark::part(mark) {
+  content: url(checkmark-outline-black.svg);
 }

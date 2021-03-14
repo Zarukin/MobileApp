@@ -74,29 +74,25 @@ export class LoginPage implements OnInit {
       .subscribe(
         async (user: firebase.User) => {
           console.log(user.displayName);
-          await user.sendEmailVerification();
+          if (!user.emailVerified) {
+            await user.sendEmailVerification();
+          }
           await this.router.navigate(["/", "home"]);
           this.loadingService.dismissLoading();
         },
-        err => {
+        (err) => {
           console.log(err.code);
           switch (err.code || err.message) {
             case "auth/popup-closed-by-user":
               this.toastService.presentToast("La connexion a été annulée.");
-              console.log(
-                "Fenêtre fermée. Connexion OAuth annulée par l'utilisateur."
-              );
+              console.log("Fenêtre fermée. Connexion OAuth annulée par l'utilisateur.");
               break;
             case "auth/user-cancelled":
               this.toastService.presentToast("La connexion a été annulée.");
-              console.log(
-                "Connexion annulée. Connexion OAuth annulée par l'utilisateur."
-              );
+              console.log("Connexion annulée. Connexion OAuth annulée par l'utilisateur.");
               break;
             case "auth/account-exists-with-different-credential":
-              this.toastService.presentToastError(
-                "Le courriel est déjà utilisé par un autre service."
-              );
+              this.toastService.presentToastError("Le courriel est déjà utilisé par un autre service.");
               console.log("Le courriel est déjà utilisé par un autre service.");
               break;
             case "auth/user-disabled":
@@ -141,16 +137,12 @@ export class LoginPage implements OnInit {
           console.log("Le courriel n'est pas valide.");
           break;
         case "auth/user-not-found":
-          this.toastService.presentToastError(
-            "Courriel ou mot de passe incorrect."
-          );
+          this.toastService.presentToastError("Courriel ou mot de passe incorrect.");
           this.toastService.presentToastForgotPassword();
           console.log("Courriel ou mot de passe incorrect.");
           break;
         case "auth/wrong-password":
-          this.toastService.presentToastError(
-            "Courriel ou mot de passe incorrect."
-          );
+          this.toastService.presentToastError("Courriel ou mot de passe incorrect.");
           this.toastService.presentToastForgotPassword();
           console.log("Courriel ou mot de passe incorrect.");
           break;

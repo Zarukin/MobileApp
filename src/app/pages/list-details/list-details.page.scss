@@ -4,3 +4,17 @@
     --checkmark-width: 1px;
     margin-left : 16px;
 }
+
+.empty-list {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-align: center;
+  color: var(--ion-color-light-shade);
+  padding: 0 50px;
+}
+
+.empty-list ion-icon {
+  width: 100px;
+  height: 100px;
+}

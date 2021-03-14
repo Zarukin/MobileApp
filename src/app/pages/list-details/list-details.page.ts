@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
@@ -18,7 +18,7 @@ import firebase from "firebase/app";
   styleUrls: ["./list-details.page.scss"],
 })
 export class ListDetailsPage implements OnInit {
-  public list: List;
+  @Input() list: List;
   private todosCollection: AngularFirestoreCollection<Todo>;
   private todosObservable: Observable<Todo[]>;
   public user: firebase.User;
@@ -35,27 +35,32 @@ export class ListDetailsPage implements OnInit {
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get("id");
-    this.list = this.listServices.GetOne(id);
-    this.list.todos = [];
-    this.user = await this.auth.currentUser;
-    this.todosCollection = this.afs
-      .collection<List>("lists")
-      .doc(this.list.id)
-      .collection("todos", (ref) => ref.orderBy("timestamp", "asc"));
-    this.todosObservable = this.todosCollection.valueChanges();
-    this.todosObservable.subscribe((todos) => {
-      todos.forEach((todo) => {
-        const todoInList = this.list.todos.find((x) => x.id === todo.id);
-        if (todoInList === undefined) {
-          this.list.todos.push(todo);
-        } else {
-          todoInList.isDone = todo.isDone;
-          todoInList.name = todo.name;
-          todoInList.description = todo.description;
-        }
+    console.log(id);
+    this.list = new List("", [], "");
+    this.listServices.GetAll().subscribe(async () => { // Obligé de récupérer toutes les listes avant sinon GetOne renvoie une liste vide.
+      this.list = this.listServices.GetOne(id);
+      this.list.todos = [];
+      this.user = await this.auth.currentUser;
+      this.todosCollection = this.afs
+        .collection<List>("lists")
+        .doc(this.list.id)
+        .collection("todos", (ref) => ref.orderBy("timestamp", "asc"));
+      this.todosObservable = this.todosCollection.valueChanges();
+      this.todosObservable.subscribe((todos) => {
+        todos.forEach((todo) => {
+          const todoInList = this.list.todos.find((x) => x.id === todo.id);
+          if (todoInList === undefined) {
+            this.list.todos.push(todo);
+          } else {
+            todoInList.isDone = todo.isDone;
+            todoInList.name = todo.name;
+            todoInList.description = todo.description;
+          }
+        });
       });
+      this.shouldDisable();
     });
-    this.shouldDisable();
+    
   }
 
   ionViewWillEnter() {

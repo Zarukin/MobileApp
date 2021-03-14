@@ -38,6 +38,13 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <div class="empty-list" *ngIf="list.todos?.length === 0">
+    <ion-icon name="file-tray-outline"></ion-icon>
+    <h4>C'est vide ici…</h4>
+    <ion-text>Ajoutez de nouvelles tâches en cliquant sur le + en bas à droite.</ion-text>
+  </div>
+
 </ion-content>
 
 <ion-fab *ngIf="user !== undefined  && (list.owner === user.email || list.canWrite.indexOf(user.email) !== -1)" vertical="bottom" horizontal="end" slot="fixed">

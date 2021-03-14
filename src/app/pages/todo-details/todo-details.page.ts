@@ -28,18 +28,24 @@ export class TodoDetailsPage implements OnInit {
     private afs: AngularFirestore
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     const id = this.route.snapshot.paramMap.get("id");
     let listId;
     this.route.queryParams.subscribe((params) => {
       listId = params['list'];
     });
-    this.parentList = this.listServices.GetOne(listId);
-    console.log(this.parentList);
-    this.todo = this.listServices.GetTodo(id, this.parentList);
-    console.log(this.todo);
-    this.user = await this.auth.currentUser;
-    this.shouldDisable();
+    this.parentList = new List("", [], "");
+    this.todo = new Todo("", "", false);
+    this.listServices.GetAll().subscribe(() => { // Obligé de récupérer toutes les listes avant sinon GetOne renvoie une liste vide.
+      this.parentList = this.listServices.GetOne(listId);
+      console.log(this.parentList);
+      this.listServices.GetTodoObservable(this.parentList).subscribe(async () => { // Obligé de récupérer toutes les todos avant sinon GetOne renvoie une todo vide.
+        this.todo = this.listServices.GetTodo(id, this.parentList);
+        console.log(this.todo);
+        this.user = await this.auth.currentUser;
+        this.shouldDisable();
+      });
+    });
   }
 
   ionViewWillEnter() {
