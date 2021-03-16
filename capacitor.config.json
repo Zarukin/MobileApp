@@ -15,6 +15,15 @@
       ],
       "serverClientId": "805634400274-jvfinbp8ibndf8lc3qionuf4tb8endmc.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
+    },
+    "CapacitorFirebaseAuth": {
+      "providers": [
+        "google.com",
+        "twitter.com",
+        "facebook.com"
+      ],
+      "languageCode": "fr",
+      "nativeAuth": true
     }
   },
   "cordova": {}

@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">myApp</string>
-    <string name="title_activity_main">myApp</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
-    <string name="server_client_id">805634400274-jvfinbp8ibndf8lc3qionuf4tb8endmc.apps.googleusercontent.com</string>
+    <string name="app_name">Todos</string>
+    <string name="title_activity_main">Todos</string>
+    <string name="package_name">com.im2ag.todos</string>
+    <string name="custom_url_scheme">com.im2ag.todos</string>
+    <string name="server_client_id">805634400274-b8lb86fhfd6h9o7gaigl9ngtk5e2ad4k.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">296510148580629</string>
+    <string name="fb_login_protocol_scheme">fb296510148580629://authorize</string>
 </resources>
