@@ -29,9 +29,7 @@ export class RegisterPage implements OnInit {
            * (?=.*?[#?!@$ %^&*-]) : At least one special character or space
            * .{8,} : Minimum eight in length
            * $ represents the end of the string.
-           * */ Validators.pattern(
-            "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
-          ),
+           * */ Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"),
         ],
       ],
       confirmPassword: ["", Validators.required],
@@ -65,10 +63,7 @@ export class RegisterPage implements OnInit {
     const password = this.registerForm.get("password").value;
 
     try {
-      const accountCreated = await this.auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+      const accountCreated = await this.auth.createUserWithEmailAndPassword(email, password);
       await accountCreated.user.sendEmailVerification();
       await this.router.navigate(["/", "home"]);
       this.toastService.presentToastSuccessSignUp();

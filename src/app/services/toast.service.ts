@@ -6,10 +6,7 @@ import { ToastController } from "@ionic/angular";
   providedIn: "root",
 })
 export class ToastService {
-  constructor(
-    private toastController: ToastController,
-    private router: Router
-  ) {}
+  constructor(private toastController: ToastController, private router: Router) {}
 
   public async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -70,6 +67,27 @@ export class ToastService {
     toast.present();
   }
 
+  public async presentToastSuccessWithHeader(header: string, message: string) {
+    const toast = await this.toastController.create({
+      header,
+      message,
+      duration: 10000,
+      position: "bottom",
+      color: "success",
+      buttons: [
+        {
+          side: "end",
+          text: "D'accord",
+          role: "cancel",
+          handler: () => {
+            console.log("Cancel clicked");
+          },
+        },
+      ],
+    });
+    toast.present();
+  }
+
   public async presentToastForgotPassword() {
     const toast = await this.toastController.create({
       cssClass: "my-custom-toast",
@@ -99,8 +117,7 @@ export class ToastService {
   public async presentToastSuccessSignUp() {
     const toast = await this.toastController.create({
       header: "Vous être maintenant enregistré !",
-      message:
-        "Veuillez aller vérifier vos courriels pour confirmer votre adresse.",
+      message: "Veuillez aller vérifier vos courriels pour confirmer votre adresse.",
       position: "bottom",
       color: "success",
       duration: 10000,

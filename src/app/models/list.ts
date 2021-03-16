@@ -1,4 +1,5 @@
 import { Todo } from "./todo";
+import firebase from "firebase/app";
 
 export class List {
   static LastId = 0;
@@ -9,6 +10,7 @@ export class List {
   owner: string;
   canRead?: string[];
   canWrite?: string[];
+  timestamp: firebase.firestore.FieldValue;
 
   constructor(name: string, todos: Todo[], owner: string) {
     this.name = name;

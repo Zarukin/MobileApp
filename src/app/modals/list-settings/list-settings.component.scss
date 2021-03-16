@@ -1,0 +1,198 @@
+ion-input, ion-textarea, ion-select {
+  margin-top: 10px;
+  border-radius: 5px;
+  --padding-start: 10px !important;
+  --padding-end: 10px !important;
+}
+
+:host-context(body[color-theme="light"]) ion-input, :host-context(body[color-theme="light"]) ion-textarea {
+  --background: rgb(240, 240, 240);
+}
+
+:host-context(body[color-theme="dark"]) ion-input, :host-context(body[color-theme="dark"]) ion-textarea {
+  --background: #1e1e1e;
+}
+
+:host-context(body[color-theme="light"]) ion-select {
+  background: rgb(240, 240, 240);
+}
+
+:host-context(body[color-theme="dark"]) ion-select {
+  background: #1e1e1e;
+}
+
+ion-item {
+  --background-focused-opacity: 0;
+}
+
+:host-context(body[color-theme="dark"]) ion-item {
+  --background: rgba(0,0,0,0);
+}
+
+form {
+  box-sizing: border-box;
+  position: relative;
+}
+
+ion-content.ios {
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+ion-button {
+  font-size: 13.5px;
+}
+
+.md ion-button {
+    --border-radius: 5px;
+}
+
+h6 {
+    text-align: center;
+    padding: 0 16px;
+}
+
+p {
+    text-align: justify;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ion-color-step-600, #60646b);
+}
+
+p b {
+    color: var(--ion-text-color, #000000);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--ion-color-light-shade);
+    overflow: visible;
+    text-align: center;
+    margin: 30px 0;
+    height: 0px;
+}
+
+.empty-list {
+  text-align: center;
+  color: var(--ion-color-light-shade);
+  padding: 0 50px;
+}
+
+.empty-list ion-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.ion-align-items-center {
+  text-align: center;
+}
+
+.blue-primary {
+  --color: var(--ion-color-primary);
+  --color-checked: var(--ion-color-primary);
+  width: 40px;
+  height: 40px;
+}
+
+.blue-secondary {
+  --color: var(--ion-color-secondary);
+  --color-checked: var(--ion-color-secondary);
+  width: 40px;
+  height: 40px;
+}
+
+.purple-tertiary {
+  --color: var(--ion-color-tertiary);
+  --color-checked: var(--ion-color-tertiary);
+  width: 40px;
+  height: 40px;
+}
+
+.green-success {
+  --color: var(--ion-color-success);
+  --color-checked: var(--ion-color-success);
+  width: 40px;
+  height: 40px;
+}
+
+.yellow-warning {
+  --color: var(--ion-color-warning);
+  --color-checked: var(--ion-color-warning);
+  width: 40px;
+  height: 40px;
+}
+
+.red-danger {
+  --color: var(--ion-color-danger);
+  --color-checked: var(--ion-color-danger);
+  width: 40px;
+  height: 40px;
+}
+
+.gray-medium {
+  --color: var(--ion-color-medium);
+  --color-checked: var(--ion-color-medium);
+  width: 40px;
+  height: 40px;
+}
+
+.black-dark {
+  --color: var(--ion-color-dark);
+  --color-checked: var(--ion-color-dark);
+  width: 40px;
+  height: 40px;
+}
+
+.blue-primary::part(container) {
+  background: var(--ion-color-primary);
+}
+
+.blue-secondary::part(container) {
+  background: var(--ion-color-secondary);
+}
+
+.purple-tertiary::part(container) {
+  background: var(--ion-color-tertiary);
+}
+
+.green-success::part(container) {
+  background: var(--ion-color-success);
+}
+
+.yellow-warning::part(container) {
+  background: var(--ion-color-warning);
+}
+
+.red-danger::part(container) {
+  background: var(--ion-color-danger);
+}
+
+.gray-medium::part(container) {
+  background: var(--ion-color-medium);
+}
+
+.black-dark::part(container) {
+  background: var(--ion-color-dark);
+}
+
+ion-radio::part(mark) {
+  // background: var(--ion-color-light);
+}
+
+ion-radio::part(mark) {
+  content: ""
+}
+
+ion-radio::part(mark) {
+  content: url(checkmark-outline.svg);
+  width: 30px;
+  height: 30px;
+}
+
+ion-radio.yellow-warning::part(mark), :host-context(body[color-theme="dark"]) ion-radio.black-dark::part(mark) {
+  content: url(checkmark-outline-black.svg);
+}

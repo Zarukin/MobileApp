@@ -4,6 +4,11 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Mes listes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="hideSearch()">
+        <ion-icon id="searchIcon" slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -37,24 +42,39 @@
 
 <ion-content [fullscreen]="true" [scrollEvents]="true">
 
+  <ion-searchbar id="searchBar" placeholder="Rechercher une liste" animated (ionChange)="search($event)" inputmode="search" enterkeyhint="search" hidden></ion-searchbar>
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content>
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-list>
+  <ion-list id="listOfList">
     <ion-item-sliding *ngFor="let list of lists">
-        <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
-          <ion-label>{{list.name}}</ion-label>
-          <ion-badge slot="end" color={{list.colour}}>{{0}}</ion-badge>
-        </ion-item>
-      <ion-item-options side="end">
+      <ion-item-options side="start" *ngIf="currentUser !== undefined && list.owner === currentUser.email || list.canWrite.indexOf(this.currentUser.email) !== -1">
+        <ion-item-option color="primary" (click)="presentModalListSetting(list)" >
+          <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item button routerLink="/list-details/{{list.id}}" routerLinkActive="active">
+        <ion-label>{{list.name}}</ion-label>
+        <ion-icon name="paper-plane-outline" slot="end" *ngIf="list.owner !== currentUser.email && list.canWrite.indexOf(this.currentUser.email) !== -1 || list.canRead.indexOf(this.currentUser.email) !== -1"></ion-icon>
+        <ion-icon name="people-outline" slot="end" *ngIf="(list.canRead.length > 0 || list.canWrite.length > 0) && list.owner === currentUser.email"></ion-icon>
+        <ion-badge slot="end" color={{list.colour}}>{{list.todos.length}}</ion-badge>
+      </ion-item>
+      <ion-item-options side="end" *ngIf="currentUser !== undefined && list.owner === currentUser.email || list.canWrite.indexOf(this.currentUser.email) !== -1">
         <ion-item-option color="danger" (click)="deleteList(list)" >
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <div class="empty-list" *ngIf="lists?.length === 0">
+    <ion-icon name="file-tray-outline"></ion-icon>
+    <h4>C'est vide ici…</h4>
+    <ion-text>Créer des listes en cliquant sur le + en bas à droite.</ion-text>
+  </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="presentModalList()" color="dark">

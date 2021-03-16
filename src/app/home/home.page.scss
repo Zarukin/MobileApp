@@ -53,3 +53,22 @@ ion-toggle {
   margin-bottom: 5px;
   color: var(--ion-color-step-850, #27323e);
 }
+
+#searchBar {
+  position: absolute;
+  background: var(--ion-item-background, var(--ion-background-color, #fff));
+}
+
+.empty-list {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  text-align: center;
+  color: var(--ion-color-light-shade);
+  padding: 0 50px;
+}
+
+.empty-list ion-icon {
+  width: 100px;
+  height: 100px;
+}

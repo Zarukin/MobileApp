@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Paramètres de la liste</ion-title>
+    <ion-buttons slot="end">
+      <form [formGroup]="listSettingsForm" (ngSubmit)="onFormSubmit()">
+        <ion-button type="submit" fill="solid" color="success" [disabled]="!listSettingsForm.valid">
+          Modifier
+        </ion-button>
+      </form>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-text color="dark">
+    <h6>Modifier le nom ou la couleur de la liste</h6>
+  </ion-text>
+  <p>Vous pouvez changer le nom de votre liste. Vous pouvez également modifier sa couleur.</p>
+
+  <form [formGroup]="listSettingsForm" (ngSubmit)="onFormSubmit()">
+    <ion-item lines="none">
+      <ion-label position="stacked">Nom</ion-label>
+      <ion-input type="text" formControlName="newListName" autofocus="true" required></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label position="stacked">Couleur</ion-label>
+    </ion-item>
+    <ion-grid>
+      <ion-radio-group value="" formControlName="listColour">
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <ion-radio class="blue-primary" mode="md" value="primary"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="blue-secondary" mode="md" value="secondary"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="purple-tertiary" mode="md" value="tertiary"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="green-success" mode="md" value="success"></ion-radio>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-align-items-center">
+          <ion-col>
+            <ion-radio class="yellow-warning" mode="md" value="warning"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="red-danger" mode="md" value="danger"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="gray-medium" mode="md" value="medium"></ion-radio>
+          </ion-col>
+          <ion-col>
+            <ion-radio class="black-dark" mode="md" value="dark"></ion-radio>
+          </ion-col>
+        </ion-row>
+      </ion-radio-group>
+    </ion-grid>
+  </form>
+</ion-content>

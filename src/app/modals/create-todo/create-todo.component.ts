@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ModalController } from "@ionic/angular";
 import { List } from "src/app/models/list";
-import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 
 @Component({
