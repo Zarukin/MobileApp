@@ -16,8 +16,12 @@ import { ListSettingsComponent } from "../modals/list-settings/list-settings.com
 
 import { Plugins } from "@capacitor/core";
 import { Todo } from "../models/todo";
+import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { element } from "protractor";
 const { Storage } = Plugins;
+const { SpeechRecognition } = Plugins;
 
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -32,7 +36,7 @@ export class HomePage implements OnInit, OnDestroy {
   userSub: Subscription;
   listSub: Subscription;
   listsObservable: Observable<List[]>;
-
+  public dis : String 
   constructor(
     public listService: ListService,
     public router: Router,
@@ -231,4 +235,38 @@ export class HomePage implements OnInit, OnDestroy {
     this.darkMode = value === "true" ? true : false;
     console.log("Got darkMode: ", value);
   }
+
+   async Speak(){
+     this.dis = '';
+     SpeechRecognition.requestPermission().then();
+       SpeechRecognition.start({
+        partialResults: true,
+        prompt: "Dites quelques chose",
+        popup: true,
+      }).then((result)=> { 
+      this.Analyze(result.matches)  ;
+      });
+   }
+  
+
+   async Analyze( matches : String[]){
+     var flagOperation = false
+     matches.forEach( async Element => {
+        if (Element.includes("crée") && Element.includes("liste") && Element.includes("nom") && flagOperation === false){
+          this.listService.Create(Element.split("nom ")[1]);
+          flagOperation = true;
+        }
+        else if (Element.includes("lis") && Element.includes("mes") && Element.includes("liste") && flagOperation === false){
+          const tmp = await TextToSpeech.requestPermissions();
+          this.lists.forEach( element => {
+            TextToSpeech.speak({
+              text: element.name,
+              volume: 1.0,
+              category: 'ambient',
+            } ).then();
+          });
+          flagOperation = true;
+        }
+     })
+   }
 }
