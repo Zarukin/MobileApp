@@ -22,25 +22,7 @@ export class ListService {
     this.userSub = this.auth.user.subscribe((user) => {
       if (user) { 
         this.user = user;
-        this.listsObservable = this.orQuery();
-        this.listsObservable.subscribe((lists) => {
-          console.log(lists);
-          lists.forEach(element => {
-            if (element.todos === undefined) {
-              element.todos = [];
-            }
-            if (element.canRead === undefined) {
-              element.canRead = [];
-            }
-            if (element.canWrite === undefined) {
-              element.canWrite = [];
-            }
-          });
-          this.lists = lists.filter((list) => {
-            return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
-              list.canWrite.indexOf(this.user.email) !== -1;
-          });
-        });
+        this.ResetServicesForNewUser();
       }
     });
       this.listsObservable = this.orQuery();
@@ -69,7 +51,7 @@ export class ListService {
 
 
 
-    orQuery() :Observable<List[]> {
+    private orQuery() :Observable<List[]> {
       this.listsCollection = this.afs.collection<List>("lists", ref => ref.where("owner", "==", firebase.auth().currentUser.email));
       const owner = this.listsCollection.valueChanges();
      const read =  this.afs.collection<List>("lists", ref => ref.where("canRead", "array-contains", firebase.auth().currentUser.email)).valueChanges();
@@ -79,6 +61,33 @@ export class ListService {
 );
   }
   
+
+  ResetServicesForNewUser(){
+    this.listsObservable = this.orQuery();
+        this.listsObservable.subscribe((lists) => {
+          console.log(lists);
+          lists.forEach(element => {
+            if (element.todos === undefined) {
+              element.todos = [];
+            }
+            if (element.canRead === undefined) {
+              element.canRead = [];
+            }
+            if (element.canWrite === undefined) {
+              element.canWrite = [];
+            }
+          });
+          this.lists = lists.filter((list) => {
+            return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
+              list.canWrite.indexOf(this.user.email) !== -1;
+          });
+        });
+  }
+
+  public GetListWithoutRefresh(): List[]{
+        return this.lists;
+  }
+
    GetAll(): Observable<List[]> { 
     return this.listsObservable;
   }

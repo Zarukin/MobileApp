@@ -36,6 +36,7 @@ export class AccountPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.userEmail = firebase.auth().currentUser.email;
     await this.fetchUserEmail();
     this.fetchConnectedAccount();
     this.emailVerified = this.currentUser.emailVerified;
