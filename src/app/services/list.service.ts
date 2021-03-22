@@ -22,6 +22,25 @@ export class ListService {
     this.userSub = this.auth.user.subscribe((user) => {
       if (user) { 
         this.user = user;
+        this.listsObservable = this.orQuery();
+        this.listsObservable.subscribe((lists) => {
+          console.log(lists);
+          lists.forEach(element => {
+            if (element.todos === undefined) {
+              element.todos = [];
+            }
+            if (element.canRead === undefined) {
+              element.canRead = [];
+            }
+            if (element.canWrite === undefined) {
+              element.canWrite = [];
+            }
+          });
+          this.lists = lists.filter((list) => {
+            return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
+              list.canWrite.indexOf(this.user.email) !== -1;
+          });
+        });
       }
     });
       this.listsObservable = this.orQuery();
