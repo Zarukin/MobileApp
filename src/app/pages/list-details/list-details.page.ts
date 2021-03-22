@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Title } from "@angular/platform-browser";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ModalController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { CreateTodoComponent } from "src/app/modals/create-todo/create-todo.component";
@@ -11,7 +11,10 @@ import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import firebase from "firebase/app";
+import { Plugins } from "@capacitor/core";
 
+const { SpeechRecognition } = Plugins;
+const { TextToSpeech } = Plugins;
 @Component({
   selector: "app-list-details",
   templateUrl: "./list-details.page.html",
@@ -23,6 +26,7 @@ export class ListDetailsPage implements OnInit {
   private todosObservable: Observable<Todo[]>;
   public user: firebase.User;
   public isDisabled: boolean;
+  public test : string;
 
   constructor(
     public route: ActivatedRoute,
@@ -30,7 +34,8 @@ export class ListDetailsPage implements OnInit {
     private auth: AngularFireAuth,
     public modalController: ModalController,
     private titleService: Title,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public router: Router
   ) {}
 
   async ngOnInit() {
@@ -47,6 +52,7 @@ export class ListDetailsPage implements OnInit {
         .collection("todos", (ref) => ref.orderBy("timestamp", "asc"));
       this.todosObservable = this.todosCollection.valueChanges();
       this.todosObservable.subscribe((todos) => {
+        this.list.todos.filter(todo => {return todos.find((x) => x.id === todo.id)});
         todos.forEach((todo) => {
           const todoInList = this.list.todos.find((x) => x.id === todo.id);
           if (todoInList === undefined) {
@@ -110,5 +116,58 @@ export class ListDetailsPage implements OnInit {
     } else {
       this.isDisabled = false;
     }
+  }
+
+  async Speak(){
+    SpeechRecognition.requestPermission().then();
+      SpeechRecognition.start({
+       partialResults: true,
+       prompt: "Dites quelques chose",
+       popup: true,
+     }).then((result)=> { 
+     this.Analyze(result.matches)  ;
+     });
+  }
+ 
+
+  async Analyze( matches : String[]){
+    var flagOperation = false
+    matches.forEach( async Element => {
+       if ((Element.includes("crée") || Element.includes("ajoute") ) && Element.includes("tâche") && Element.includes("nom ") && flagOperation === false){
+         if (Element.split("nom ")[1] !== undefined){
+          this.test = "nn : " + Element.split("nom ")[1];
+          this.listServices.CreateTodo(this.list,Element.split("nom ")[1], " ");
+          flagOperation = true;
+         }
+       }
+       else if (Element.includes("lis") && Element.includes("mes") && Element.includes("tâche") && flagOperation === false){
+         var allTitle = "Vos taches à faire on pour titre : "
+         this.list.todos.forEach( element =>{
+           allTitle += element.name + ". ";
+         });
+           const jean =  await TextToSpeech.speak({
+             text: allTitle,
+             locale: "fr-FR",
+              speechRate: 1,
+              pitchRate: 1,
+           } );
+         flagOperation = true;
+       }else if ((Element.includes("affiche") || Element.includes("montre") ) && Element.includes("tâche") && Element.includes("nom ")  && flagOperation === false){
+        var selectedTodo
+        this.list.todos.forEach(todo => {
+          if (selectedTodo === undefined && todo.name === Element.split("nom ")[1]){
+            selectedTodo = todo
+          }
+        });
+        if (selectedTodo !== undefined){
+          await this.router.navigate(["todo-details/", selectedTodo.id],{
+            queryParams: {
+              list: this.list.id
+            },
+            queryParamsHandling: 'merge',
+          });
+        }
+  }
+    })
   }
 }

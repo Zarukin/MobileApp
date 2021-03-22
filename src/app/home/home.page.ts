@@ -20,8 +20,7 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { element } from "protractor";
 const { Storage } = Plugins;
 const { SpeechRecognition } = Plugins;
-
-import { TextToSpeech } from '@capacitor-community/text-to-speech';
+const { TextToSpeech } = Plugins;
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -71,7 +70,6 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.listsObservable = this.listService.GetAll();
     this.listSub = this.listsObservable.subscribe(async (lists) => {
-      console.log(lists);
       const user = this.currentUser;
       lists.forEach((element) => {
         if (element.todos === undefined) {
@@ -90,7 +88,6 @@ export class HomePage implements OnInit, OnDestroy {
       this.lists = lists.filter((list) => {
         return list.owner === user.email || list.canRead.indexOf(user.email) !== -1 || list.canWrite.indexOf(user.email) !== -1;
       });
-      console.log(this.lists);
       this.listsBackup = [...this.lists];
     });
 
@@ -252,20 +249,35 @@ export class HomePage implements OnInit, OnDestroy {
    async Analyze( matches : String[]){
      var flagOperation = false
      matches.forEach( async Element => {
-        if (Element.includes("crée") && Element.includes("liste") && Element.includes("nom") && flagOperation === false){
+        if ((Element.includes("crée") || Element.includes("ajoute") ) && Element.includes("liste") && Element.includes("nom")  && flagOperation === false){
+          if (Element.split("nom ")[1] != undefined){
           this.listService.Create(Element.split("nom ")[1]);
           flagOperation = true;
+          }
         }
         else if (Element.includes("lis") && Element.includes("mes") && Element.includes("liste") && flagOperation === false){
-          const tmp = await TextToSpeech.requestPermissions();
-          this.lists.forEach( element => {
-            TextToSpeech.speak({
-              text: element.name,
-              volume: 1.0,
-              category: 'ambient',
-            } ).then();
+          var allTitle = "Vos listes on pour titre : "
+          this.lists.forEach( element =>{
+            allTitle += element.name + ", ";
           });
+
+            const jean =  await TextToSpeech.speak({
+              text: allTitle,
+              locale: "fr-FR",
+               speechRate: 1,
+               pitchRate: 1,
+            } );
           flagOperation = true;
+        }else if ((Element.includes("affiche") || Element.includes("montre") ) && Element.includes("liste") && Element.includes("nom")  && flagOperation === false){
+              var selectedList 
+              this.lists.forEach(list => {
+                if (selectedList === undefined && list.name === Element.split("nom ")[1]){
+                  selectedList = list
+                }
+              });
+              if (selectedList){
+                await this.router.navigate(["/list-details/", selectedList.id]);
+              }
         }
      })
    }
