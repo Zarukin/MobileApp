@@ -14,14 +14,14 @@
       <ion-label color={{parentList.colour}}>Nom</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-input (ionChange)="updateName($event)" value="{{todo.name}}" [attr.readonly]="isReadonly"></ion-input>
+      <ion-input (ionBlur)="updateName($event)" value="{{todo.name}}" [attr.readonly]="isReadonly"></ion-input>
     </ion-item>
 
     <ion-list-header>
       <ion-label color={{parentList.colour}}>Description</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-textarea (ionChange)="updateDescription($event)" rows="10" value="{{todo.description}}" [attr.readonly]="isReadonly"></ion-textarea>
+      <ion-textarea (ionBlur)="updateDescription($event)" rows="10" value="{{todo.description}}" [attr.readonly]="isReadonly"></ion-textarea>
     </ion-item>
   </ion-list>
 </ion-content>
