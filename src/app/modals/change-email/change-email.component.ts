@@ -68,7 +68,6 @@ lists : List[];
              await this.afs.collection("lists").doc(list.id).update({ canRead:  list.canRead});
           }
         }
-
       await this.currentUser.updateEmail(email);
       
       this.modalController.dismiss();
@@ -76,6 +75,7 @@ lists : List[];
         "Courriel modifié avec succès."
       );
       this.listService.ResetServicesForNewUser();
+      window.location.reload();
     } catch (error) {
       console.log(error);
       this.modalController.dismiss();

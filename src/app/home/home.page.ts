@@ -63,7 +63,6 @@ export class HomePage implements OnInit, OnDestroy {
     });
     this.routeService.subscribeRoute();
     this.userSub = this.auth.user.subscribe((user) => {
-  
       if (user) {
         this.currentUser = user;
         this.verifiedEmail = user.emailVerified;
@@ -71,18 +70,6 @@ export class HomePage implements OnInit, OnDestroy {
       }
     });
     
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        var uid = user.uid;
-        this.ResetListObservable();
-        // ...
-      } else {
-        // User is signed out
-        // ...
-      }
-    });
 this.ResetListObservable();
  
 

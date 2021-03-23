@@ -46,7 +46,6 @@ export class ListDetailsPage implements OnInit {
     this.list = new List("", [], "");
     this.listServices.GetAll().subscribe(async () => { // Obligé de récupérer toutes les listes avant sinon GetOne renvoie une liste vide.
       this.list = this.listServices.GetOne(id);
-      this.list.todos = [];
       this.user = await this.auth.currentUser;
       this.todosCollection = this.afs
         .collection<List>("lists")
@@ -106,6 +105,7 @@ export class ListDetailsPage implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.listServices.DeleteTodo(this.list, todo);
+    this.list.todos.splice(this.list.todos.indexOf(todo,1));
   }
 
   share() {
