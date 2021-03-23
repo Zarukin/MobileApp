@@ -46,8 +46,8 @@
     <ion-text>Ajoutez de nouvelles tâches en cliquant sur le + en bas à droite.</ion-text>
   </div>
 
-  <ion-fab vertical="bottom" horizontal="left" slot="fixed">
-    <ion-fab-button (click)="Speak()" color="dark">
+  <ion-fab *ngIf="isNative" vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="Speak()" color="{{list.colour}}">
       <ion-icon name="mic"></ion-icon>
     </ion-fab-button>
   </ion-fab>

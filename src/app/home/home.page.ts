@@ -14,7 +14,7 @@ import { ToastService } from "../services/toast.service";
 import firebase from "firebase/app";
 import { ListSettingsComponent } from "../modals/list-settings/list-settings.component";
 
-import { Plugins } from "@capacitor/core";
+import { Capacitor, Plugins } from "@capacitor/core";
 import { Todo } from "../models/todo";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { element } from "protractor";
@@ -35,6 +35,7 @@ export class HomePage implements OnInit, OnDestroy {
   userSub: Subscription;
   listSub: Subscription;
   listsObservable: Observable<List[]>;
+  isNative: boolean;
   public dis : String 
   constructor(
     public listService: ListService,
@@ -50,6 +51,7 @@ export class HomePage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isNative = Capacitor.isNative;
     this.getDarkMode().then(() => {
       console.log("darkMode : " + this.darkMode);
       if (this.darkMode === true) {
