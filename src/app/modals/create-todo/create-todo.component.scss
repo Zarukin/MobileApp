@@ -1,4 +1,4 @@
-ion-input, ion-textarea {
+ion-input, ion-textarea, ion-datetime {
   margin-top: 10px;
   border-radius: 5px;
   --padding-start: 10px !important;
@@ -57,4 +57,32 @@ p {
 
 p b {
     color: var(--ion-text-color, #000000);
+}
+
+:host-context(body[color-theme="light"]) ion-datetime {
+  background: rgb(240, 240, 240);
+}
+
+:host-context(body[color-theme="dark"]) ion-datetime {
+  background: #1e1e1e;
+}
+
+.clear-date-button {
+    color: var(--ion-color-step-600);
+    margin: 0;
+    width: 30px;
+    height: 30px;
+
+    position: absolute;
+    right: 20px;
+    bottom: 5px;
+    z-index: 99;
+}
+
+.clear-date-button::part(native) {
+    padding: 0;
+}
+
+ion-datetime {
+    flex: 1;
 }

@@ -28,12 +28,13 @@
           {{todo.name}}
           <p>{{todo.description}}</p>
         </ion-label>
+        <ion-icon class="calendar-icon" name="calendar-outline" slot="end" *ngIf="todo.deadline !== undefined"></ion-icon>
         <ion-checkbox class="casaco" color={{list.colour}}  slot="end" value="todo.isDone" [(ngModel)]="todo.isDone" (click)="$event.stopPropagation(); updateIsDone(todo)" [attr.disabled]="isDisabled ? true: null"></ion-checkbox>
       </ion-item>
       
       <ion-item-options side="end" *ngIf="!isDisabled">
         <ion-item-option color="danger" (click)="deleteTodo(todo)">
-          <ion-icon slot="icon-only" name="trash"></ion-icon>
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -45,8 +46,8 @@
     <ion-text>Ajoutez de nouvelles tâches en cliquant sur le + en bas à droite.</ion-text>
   </div>
 
-  <ion-fab vertical="bottom" horizontal="left" slot="fixed">
-    <ion-fab-button (click)="Speak()" color="dark">
+  <ion-fab *ngIf="isNative" vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="Speak()" color="{{list.colour}}">
       <ion-icon name="mic"></ion-icon>
     </ion-fab-button>
   </ion-fab>

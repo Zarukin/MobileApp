@@ -21,7 +21,28 @@
       <ion-label color={{parentList.colour}}>Description</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-textarea (ionBlur)="updateDescription($event)" rows="10" value="{{todo.description}}" [attr.readonly]="isReadonly"></ion-textarea>
+      <ion-textarea (ionChange)="updateDescription($event)" rows="10" placeholder="Ajouter une description" value="{{todo.description}}" [attr.readonly]="isReadonly"></ion-textarea>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label color={{parentList.colour}}>Date d'échéance</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-datetime (ionChange)="updateDeadline($event)" #datepickerInput [attr.readonly]="isReadonly"
+        placeholder="Ajouter une date d'échéance" 
+        displayFormat="D MMM YYYY à H:mm" 
+        min="1996" 
+        max="2099" 
+        cancelText="Annuler" 
+        doneText="Accepter" 
+        value="{{deadlineISO}}" 
+        dayShortNames="customDayShortNames" 
+        monthNames="janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre"
+        monthShortNames="janv, févr, mars, avr, mai, juin, juil, août, sept, oct, nov, déc">
+      </ion-datetime>
+      <ion-button [hidden]="datepickerInput.value === ''" class="clear-date-button" slot="end" (click)="clearDate()"  fill="clear" size="default" shape="round" [hidden]="isDisabled" [attr.disabled]="isDisabled ? true: null">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

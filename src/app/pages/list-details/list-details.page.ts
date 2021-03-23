@@ -11,7 +11,7 @@ import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import firebase from "firebase/app";
-import { Plugins } from "@capacitor/core";
+import { Capacitor, Plugins } from "@capacitor/core";
 
 const { SpeechRecognition } = Plugins;
 const { TextToSpeech } = Plugins;
@@ -26,7 +26,8 @@ export class ListDetailsPage implements OnInit {
   private todosObservable: Observable<Todo[]>;
   public user: firebase.User;
   public isDisabled: boolean;
-  public test : string;
+  public test: string;
+  isNative: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -39,6 +40,7 @@ export class ListDetailsPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.isNative = Capacitor.isNative;
     const id = this.route.snapshot.paramMap.get("id");
     console.log(id);
     this.list = new List("", [], "");

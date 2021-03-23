@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute } from "@angular/router";
 import { List } from "src/app/models/list";
@@ -19,6 +19,9 @@ export class TodoDetailsPage implements OnInit {
   public user: firebase.User;
   public isDisabled: boolean;
   public isReadonly: boolean;
+  public deadlineISO: string;
+  public deadline: Date;
+  @ViewChild("datepickerInput") datepickerInput;
 
   constructor(
     public route: ActivatedRoute,
@@ -32,16 +35,22 @@ export class TodoDetailsPage implements OnInit {
     const id = this.route.snapshot.paramMap.get("id");
     let listId;
     this.route.queryParams.subscribe((params) => {
-      listId = params['list'];
+      listId = params["list"];
     });
     this.parentList = new List("", [], "");
     this.todo = new Todo("", "", false);
-    this.listServices.GetAll().subscribe(() => { // Obligé de récupérer toutes les listes avant sinon GetOne renvoie une liste vide.
+    this.listServices.GetAll().subscribe(() => {
+      // Obligé de récupérer toutes les listes avant sinon GetOne renvoie une liste vide.
       this.parentList = this.listServices.GetOne(listId);
       console.log(this.parentList);
-      this.listServices.GetTodoObservable(this.parentList).subscribe(async () => { // Obligé de récupérer toutes les todos avant sinon GetOne renvoie une todo vide.
+      this.listServices.GetTodoObservable(this.parentList).subscribe(async () => {
+        // Obligé de récupérer toutes les todos avant sinon GetOne renvoie une todo vide.
         this.todo = this.listServices.GetTodo(id, this.parentList);
         console.log(this.todo);
+        if (this.todo.deadline !== undefined) {
+          this.deadline = this.todo.deadline.toDate();
+          this.deadlineISO = this.deadline.toISOString();
+        }
         this.user = await this.auth.currentUser;
         this.shouldDisable();
       });
@@ -63,9 +72,21 @@ export class TodoDetailsPage implements OnInit {
   }
 
   updateIsDone(e) {
-    if (this.user !== undefined  && this.parentList.canRead.indexOf(this.user.email) === -1){
-    this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({ isDone: !this.todo.isDone });
+    if (this.user !== undefined && this.parentList.canRead.indexOf(this.user.email) === -1) {
+      this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({ isDone: !this.todo.isDone });
     }
+  }
+
+  updateDeadline(e) {
+    this.deadline = new Date(e.currentTarget.value);
+    this.todo.deadline = firebase.firestore.Timestamp.fromDate(this.deadline);
+    this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({ deadline: this.todo.deadline });
+  }
+
+  clearDate() {
+    this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({
+      deadline: firebase.firestore.FieldValue.delete(),
+    }).then(() => this.datepickerInput.value = "");
   }
 
   shouldDisable() {

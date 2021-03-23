@@ -146,15 +146,27 @@ export class ListService {
     
   }
 
-  CreateTodo(list: List, todoName: string, todoDesc: string) {
+  CreateTodo(list: List, todoName: string, todoDesc: string, deadline?: firebase.firestore.Timestamp) {
     const id = this.afs.createId();
-    const todo: Todo = {
-      id,
-      name: todoName,
-      description: todoDesc,
-      isDone: false,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+    let todo: Todo;
+    if (deadline !== undefined) {
+      todo = {
+        id,
+        name: todoName,
+        description: todoDesc,
+        isDone: false,
+        deadline,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    } else {
+      todo = {
+        id,
+        name: todoName,
+        description: todoDesc,
+        isDone: false,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    }
     this.listsCollection.doc(list.id).collection<Todo>("todos").doc(id).set(todo);
   }
 
