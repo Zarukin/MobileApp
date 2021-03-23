@@ -33,5 +33,23 @@
       <ion-label position="stacked">Description</ion-label>
       <ion-textarea type="text" rows="10" formControlName="todoDesc"></ion-textarea>
     </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Date d'échéance</ion-label>
+      <ion-datetime (click)="getDate()" formControlName="todoDeadline" #datepickerInput
+        displayFormat="D MMM YYYY à HH:mm" 
+        min="1996" 
+        max="2099" 
+        cancelText="Annuler"
+        doneText="Accepter"
+        value=""
+        dayShortNames="customDayShortNames"
+        monthNames="janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre"
+        monthShortNames="janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc.">
+      </ion-datetime>
+      <ion-button [hidden]="datepickerInput.value === ''" class="clear-date-button" slot="end" (click)="this.datepickerInput.value = ''"  fill="clear" size="default" shape="round">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
   </form>
 </ion-content>

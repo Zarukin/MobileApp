@@ -9,3 +9,18 @@
 .ios .casaco { // style iOS
     margin-right: 6px;
 }
+
+.clear-date-button {
+    color: #666666;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.clear-date-button::part(native) {
+    padding: 0;
+}
+
+ion-datetime {
+    flex: 1;
+}

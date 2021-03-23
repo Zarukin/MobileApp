@@ -6,6 +6,7 @@ export class Todo {
   name: string;
   description: string;
   isDone: boolean;
+  deadline?: firebase.firestore.Timestamp;
   timestamp: firebase.firestore.FieldValue;
 
   constructor(name: string, description: string, isDone) {

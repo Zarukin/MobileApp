@@ -18,7 +18,7 @@ export class ListService {
 
   constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
     this.lists = [];
-    this.listsCollection = this.afs.collection<List>("lists", ref => ref.orderBy("timestamp", "asc"));
+    this.listsCollection = this.afs.collection<List>("lists", (ref) => ref.orderBy("timestamp", "asc"));
     this.listsObservable = this.listsCollection.valueChanges();
     this.userSub = this.auth.user.subscribe((user) => {
       if (user) {
@@ -28,7 +28,7 @@ export class ListService {
     // this.auth.currentUser.then((user) => {
     //   this.user = user;
     this.listsObservable.subscribe((lists) => {
-      lists.forEach(element => {
+      lists.forEach((element) => {
         if (element.todos === undefined) {
           element.todos = [];
         }
@@ -40,8 +40,7 @@ export class ListService {
         }
       });
       this.lists = lists.filter((list) => {
-        return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 ||
-          list.canWrite.indexOf(this.user.email) !== -1;
+        return list.owner === this.user.email || list.canRead.indexOf(this.user.email) !== -1 || list.canWrite.indexOf(this.user.email) !== -1;
       });
     });
     // });
@@ -95,20 +94,32 @@ export class ListService {
       name: listName,
       colour: this.GetRandomColour(),
       owner: email,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
     this.listsCollection.doc(id).set(list);
   }
 
-  CreateTodo(list: List, todoName: string, todoDesc: string) {
+  CreateTodo(list: List, todoName: string, todoDesc: string, deadline?: firebase.firestore.Timestamp) {
     const id = this.afs.createId();
-    const todo: Todo = {
-      id,
-      name: todoName,
-      description: todoDesc,
-      isDone: false,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    };
+    let todo: Todo;
+    if (deadline !== undefined) {
+      todo = {
+        id,
+        name: todoName,
+        description: todoDesc,
+        isDone: false,
+        deadline,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    } else {
+      todo = {
+        id,
+        name: todoName,
+        description: todoDesc,
+        isDone: false,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    }
     this.listsCollection.doc(list.id).collection<Todo>("todos").doc(id).set(todo);
   }
 
