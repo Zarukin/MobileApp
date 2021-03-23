@@ -6,7 +6,9 @@ import { Todo } from "src/app/models/todo";
 import { ListService } from "src/app/services/list.service";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { Calendar } from "@ionic-native/calendar/ngx";
 import firebase from "firebase/app";
+import { Capacitor } from "@capacitor/core";
 
 @Component({
   selector: "app-todo-details",
@@ -19,6 +21,7 @@ export class TodoDetailsPage implements OnInit {
   public user: firebase.User;
   public isDisabled: boolean;
   public isReadonly: boolean;
+  public isNative: boolean;
   public deadlineISO: string;
   public deadline: Date;
   @ViewChild("datepickerInput") datepickerInput;
@@ -28,10 +31,12 @@ export class TodoDetailsPage implements OnInit {
     public listServices: ListService,
     private auth: AngularFireAuth,
     private titleService: Title,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private calendar: Calendar
   ) {}
 
   ngOnInit() {
+    this.isNative = Capacitor.isNative;
     const id = this.route.snapshot.paramMap.get("id");
     let listId;
     this.route.queryParams.subscribe((params) => {
@@ -87,6 +92,17 @@ export class TodoDetailsPage implements OnInit {
     this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({
       deadline: firebase.firestore.FieldValue.delete(),
     }).then(() => this.datepickerInput.value = "");
+  }
+
+  createEvent() {
+    const deadline: Date = new Date(this.todo.deadline.toDate());
+    const deadlineHour = deadline.getHours();
+    const startTime = deadline.setHours(deadlineHour - 1);
+    this.calendar.createEventInteractively(this.todo.name, null, this.todo.description, deadline, this.todo.deadline.toDate());
+  }
+
+  openCalendar() {
+    this.calendar.openCalendar(new Date());
   }
 
   shouldDisable() {

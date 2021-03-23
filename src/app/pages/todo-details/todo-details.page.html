@@ -44,5 +44,14 @@
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
     </ion-item>
+
+    <ion-list-header *ngIf="isNative">
+      <ion-label color={{parentList.colour}}>Intégration calendrier</ion-label>
+    </ion-list-header>
+    <ion-item lines="full" *ngIf="isNative">
+      <ion-button class="calendar-button" *ngIf="datepickerInput.value !== ''" color={{parentList.colour}} slot="start" (click)="createEvent()">Créer un évènement</ion-button>
+      <ion-button class="calendar-button" color={{parentList.colour}} slot="start" (click)="openCalendar()">Ouvrir le calendrier</ion-button>
+    </ion-item>
+
   </ion-list>
 </ion-content>

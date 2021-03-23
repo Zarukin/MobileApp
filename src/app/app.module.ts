@@ -19,6 +19,7 @@ import { ChangeEmailComponent } from "./modals/change-email/change-email.compone
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
 import { ShareListComponent } from "./modals/share-list/share-list.component";
 import { ListSettingsComponent } from "./modals/list-settings/list-settings.component";
+import { Calendar } from "@ionic-native/calendar/ngx";
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { ListSettingsComponent } from "./modals/list-settings/list-settings.comp
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Calendar
   ],
   bootstrap: [AppComponent],
 })
