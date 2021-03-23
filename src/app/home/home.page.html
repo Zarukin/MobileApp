@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Mes listes</ion-title>
+    <ion-title> {{dis}} Mes listes</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="hideSearch()">
         <ion-icon id="searchIcon" slot="icon-only" name="search-outline"></ion-icon>
@@ -11,7 +11,6 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-menu side="start" menuId="first" contentId="main">
   <ion-header>
     <ion-toolbar>
@@ -20,6 +19,7 @@
   </ion-header>
 
   <ion-content>
+    <ion-text>{{dis}}</ion-text>
     <ion-list>
       <ion-item>
         <ion-icon class="component-icon component-icon-dark" name="moon" slot="start"></ion-icon>
@@ -81,7 +81,15 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="left" slot="fixed">
+    <ion-fab-button (click)="Speak()" color="dark">
+      <ion-icon name="mic"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
+
+
 
 <ion-footer class="email-verified-warning" *ngIf="!verifiedEmail">
   <ion-item color="warning">

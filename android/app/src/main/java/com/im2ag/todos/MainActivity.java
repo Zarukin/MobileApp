@@ -6,9 +6,9 @@ import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 
 import java.util.ArrayList;
-
+import com.getcapacitor.community.speechrecognition.SpeechRecognition;
 import com.baumblatt.capacitor.firebase.auth.CapacitorFirebaseAuth;
-import com.im2ag.todos.NativeLinking;
+import com.getcapacitor.community.tts.TextToSpeech;
 
 public class MainActivity extends BridgeActivity {
   @Override
@@ -20,6 +20,8 @@ public class MainActivity extends BridgeActivity {
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
       add(CapacitorFirebaseAuth.class);
+      add(SpeechRecognition.class);
+      add(TextToSpeech.class);
       // add(NativeLinking.class);
     }});
   }
