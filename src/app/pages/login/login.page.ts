@@ -78,6 +78,7 @@ export class LoginPage implements OnInit {
             await user.sendEmailVerification();
           }
           await this.router.navigate(["/", "home"]);
+          window.location.reload();
           this.loadingService.dismissLoading();
         },
         (err) => {
