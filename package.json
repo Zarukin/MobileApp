@@ -25,6 +25,7 @@
     "@capacitor-community/text-to-speech": "^0.2.3",
     "@capacitor/android": "^2.4.6",
     "@capacitor/core": "2.4.6",
+    "@capacitor/ios": "^2.4.6",
     "@ionic-native/calendar": "^5.31.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/splash-screen": "^5.0.0",
