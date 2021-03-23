@@ -10,7 +10,8 @@ import firebase from "firebase/app";
 import { Title } from "@angular/platform-browser";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
-import { Capacitor } from "@capacitor/core";
+import { Capacitor, Plugins } from "@capacitor/core";
+const { NativeGithubLogin } = Plugins;
 
 @Component({
   selector: "app-login",
@@ -59,7 +60,47 @@ export class LoginPage implements OnInit {
     this.slides.slideTo(1);
   }
 
-  public async loginWithGitHub() {}
+  public async loginWithGitHub() {
+    if (!this.isNative) {
+      try {
+        let provider = null;
+        this.loadingService.presentLoading("En attente…");
+        provider = new firebase.auth.GithubAuthProvider();
+        const result = await firebase.auth().signInWithPopup(provider);
+        const credential = result.credential;
+        const accountCreated = await this.auth.signInWithCredential(credential);
+        await accountCreated.user.sendEmailVerification();
+        await this.router.navigate(["/", "home"]);
+        this.loadingService.dismissLoading();
+      } catch (error) {
+        console.log(error);
+        this.loadingService.dismissLoading();
+
+        switch (error.code) {
+          case "auth/popup-closed-by-user":
+            this.toastService.presentToast("La connexion a été annulée.");
+            console.log("Fenêtre fermée. Connexion OAuth annulée par l'utilisateur.");
+            break;
+          case "auth/user-cancelled":
+            this.toastService.presentToast("La connexion a été annulée.");
+            console.log("Connexion annulée. Connexion OAuth annulée par l'utilisateur.");
+            break;
+          case "auth/account-exists-with-different-credential":
+            this.toastService.presentToastError("Le courriel est déjà utilisé par un autre service.");
+            console.log("Le courriel est déjà utilisé par un autre service.");
+            break;
+          case "auth/user-disabled":
+            this.toastService.presentToastError("Ce compte a été désactivé.");
+            console.log("Ce compte a été désactivé.");
+            break;
+          default:
+            this.toastService.presentToastError(error.code);
+            console.log(error.code);
+            break;
+        }
+      }
+    }
+  }
 
   public async loginWithSocial(social: string) {
     this.loadingService.presentLoading("En attente…");

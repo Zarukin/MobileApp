@@ -22,7 +22,8 @@ public class MainActivity extends BridgeActivity {
       add(CapacitorFirebaseAuth.class);
       add(SpeechRecognition.class);
       add(TextToSpeech.class);
-      // add(NativeLinking.class);
+      add(NativeLinking.class);
+      add(NativeGithubLogin.class);
     }});
   }
 }
