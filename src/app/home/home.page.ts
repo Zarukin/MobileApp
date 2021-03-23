@@ -18,6 +18,7 @@ import { Capacitor, Plugins } from "@capacitor/core";
 import { Todo } from "../models/todo";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 import { element } from "protractor";
+import { mainModule } from "process";
 const { Storage } = Plugins;
 const { SpeechRecognition } = Plugins;
 const { TextToSpeech } = Plugins;
@@ -60,16 +61,39 @@ export class HomePage implements OnInit, OnDestroy {
         document.body.setAttribute("color-theme", "light");
       }
     });
-
     this.routeService.subscribeRoute();
     this.userSub = this.auth.user.subscribe((user) => {
+  
       if (user) {
         this.currentUser = user;
         this.verifiedEmail = user.emailVerified;
         console.log("Is the email verified ? " + this.verifiedEmail);
       }
     });
+    
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        var uid = user.uid;
+        this.ResetListObservable();
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+this.ResetListObservable();
+ 
 
+    // if (document.body.getAttribute("color-theme") === "light") {
+    //   this.darkMode = false;
+    // } else if (document.body.getAttribute("color-theme") === "dark") {
+    //   this.darkMode = true;
+    // }
+  }
+
+  ResetListObservable(){
     this.listsObservable = this.listService.GetAll();
     this.listSub = this.listsObservable.subscribe(async (lists) => {
       const user = this.currentUser;
@@ -92,12 +116,6 @@ export class HomePage implements OnInit, OnDestroy {
       });
       this.listsBackup = [...this.lists];
     });
-
-    // if (document.body.getAttribute("color-theme") === "light") {
-    //   this.darkMode = false;
-    // } else if (document.body.getAttribute("color-theme") === "dark") {
-    //   this.darkMode = true;
-    // }
   }
 
   ngOnDestroy() {
@@ -137,7 +155,16 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   public deleteList(list: List) {
+    if (list.owner == this.currentUser.email){
     this.listService.Delete(list);
+    }else if (list.canWrite.indexOf(this.currentUser.email) > -1) {
+ list.canWrite.splice(list.canWrite.indexOf(this.currentUser.email),1)
+      this.afs.collection("lists").doc(list.id).update({ canWrite: list.canWrite });
+    }else if (list.canRead.indexOf(this.currentUser.email) > -1 ){
+      list.canRead.splice(list.canRead.indexOf(this.currentUser.email));
+      this.afs.collection("lists").doc(list.id).update({ canRead:  list.canRead});
+    }
+    this.lists.splice(this.lists.indexOf(list),1);
   }
 
   public toggleColourTheme() {
@@ -159,6 +186,7 @@ export class HomePage implements OnInit, OnDestroy {
       await this.toastService.dismissToast();
     }
     this.loadingService.dismissLoading();
+  
   }
 
   doRefresh(event) {
@@ -236,7 +264,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
    async Speak(){
-     this.dis = '';
      SpeechRecognition.requestPermission().then();
        SpeechRecognition.start({
         partialResults: true,

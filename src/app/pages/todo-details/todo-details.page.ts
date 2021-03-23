@@ -70,7 +70,7 @@ export class TodoDetailsPage implements OnInit {
     this.todo.description = e.currentTarget.value;
     this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({ description: this.todo.description });
   }
-
+  
   updateName(e) {
     this.todo.name = e.currentTarget.value;
     this.afs.collection("lists").doc(this.parentList.id).collection("todos").doc(this.todo.id).update({ name: this.todo.name });

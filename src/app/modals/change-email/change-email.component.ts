@@ -4,6 +4,10 @@ import firebase from "firebase/app";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { ToastService } from 'src/app/services/toast.service';
+import { ListService } from 'src/app/services/list.service';
+import { List } from 'src/app/models/list';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-change-email",
@@ -14,12 +18,15 @@ export class ChangeEmailComponent implements OnInit {
   public newEmailForm: FormGroup;
   signInMethods: string[] = [];
   currentUser: firebase.User;
-
+lists : List[];
   constructor(
     private auth: AngularFireAuth,
     private modalController: ModalController,
     private fb: FormBuilder,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private listService: ListService,
+    private afs: AngularFirestore,
+    public router: Router
   ) {
     this.newEmailForm = this.fb.group({
       newEmail: ["", Validators.required],
@@ -50,12 +57,25 @@ export class ChangeEmailComponent implements OnInit {
         const provider = new firebase.auth.OAuthProvider(providerId[0]);
         await this.currentUser.reauthenticateWithPopup(provider);
       }
+      for (const list  of this.listService.GetListWithoutRefresh()) {
+        if (list.owner == this.currentUser.email){
+           await  this.afs.collection("lists").doc(list.id).update({ owner: email });
+          }else if (list.canWrite.indexOf(this.currentUser.email) > -1) {
+             list.canWrite[list.canWrite.indexOf(this.currentUser.email)] = email;
+            await this.afs.collection("lists").doc(list.id).update({ canWrite: list.canWrite });
+          }else if (list.canRead.indexOf(this.currentUser.email) > -1 ){
+            list.canRead[list.canRead.indexOf(this.currentUser.email)] = email;
+             await this.afs.collection("lists").doc(list.id).update({ canRead:  list.canRead});
+          }
+        }
 
       await this.currentUser.updateEmail(email);
+      
       this.modalController.dismiss();
       this.toastService.presentToastSuccess(
         "Courriel modifié avec succès."
       );
+      this.listService.ResetServicesForNewUser();
     } catch (error) {
       console.log(error);
       this.modalController.dismiss();

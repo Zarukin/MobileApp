@@ -14,21 +14,21 @@
       <ion-label color={{parentList.colour}}>Nom</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-input (ionChange)="updateName($event)" value="{{todo.name}}" [attr.readonly]="isReadonly"></ion-input>
+      <ion-input (ionBlur)="updateName($event)" value="{{todo.name}}" [attr.readonly]="isReadonly"></ion-input>
     </ion-item>
 
     <ion-list-header>
       <ion-label color={{parentList.colour}}>Description</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-textarea (ionChange)="updateDescription($event)" rows="10" placeholder="Ajouter une description" value="{{todo.description}}" [attr.readonly]="isReadonly"></ion-textarea>
+      <ion-textarea (ionBlur)="updateDescription($event)" rows="10" placeholder="Ajouter une description" value="{{todo.description}}" [attr.readonly]="isReadonly"></ion-textarea>
     </ion-item>
 
     <ion-list-header>
       <ion-label color={{parentList.colour}}>Date d'échéance</ion-label>
     </ion-list-header>
     <ion-item>
-      <ion-datetime (ionChange)="updateDeadline($event)" #datepickerInput [attr.readonly]="isReadonly"
+      <ion-datetime (ionBlur)="updateDeadline($event)" #datepickerInput [attr.readonly]="isReadonly"
         placeholder="Ajouter une date d'échéance" 
         displayFormat="D MMM YYYY à H:mm" 
         min="1996" 
