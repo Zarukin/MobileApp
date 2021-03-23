@@ -19,12 +19,14 @@ export class ListService {
   private userSub: Subscription;
 
   constructor(private afs: AngularFirestore, private auth: AngularFireAuth) {
+    this.lists = [];
     this.userSub = this.auth.user.subscribe((user) => {
       if (user) { 
         this.user = user;
-        this.ResetServicesForNewUser();
+
       }
     });
+
       this.listsObservable = this.orQuery();
    
       this.listsObservable.subscribe((lists) => {
@@ -45,7 +47,7 @@ export class ListService {
             list.canWrite.indexOf(this.user.email) !== -1;
         });
       });
-      this.lists = [];
+      
 
     }
 
@@ -63,6 +65,7 @@ export class ListService {
   
 
   ResetServicesForNewUser(){
+    this.lists = [];
     this.listsObservable = this.orQuery();
         this.listsObservable.subscribe((lists) => {
           console.log(lists);

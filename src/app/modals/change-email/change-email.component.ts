@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ListService } from 'src/app/services/list.service';
 import { List } from 'src/app/models/list';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-change-email",
@@ -24,7 +25,8 @@ lists : List[];
     private fb: FormBuilder,
     private toastService: ToastService,
     private listService: ListService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    public router: Router
   ) {
     this.newEmailForm = this.fb.group({
       newEmail: ["", Validators.required],
@@ -55,22 +57,20 @@ lists : List[];
         const provider = new firebase.auth.OAuthProvider(providerId[0]);
         await this.currentUser.reauthenticateWithPopup(provider);
       }
-
-      this.listService.GetListWithoutRefresh().forEach(list =>{
+      for (const list  of this.listService.GetListWithoutRefresh()) {
         if (list.owner == this.currentUser.email){
-            this.afs.collection("lists").doc(list.id).update({ owner: email });
+           await  this.afs.collection("lists").doc(list.id).update({ owner: email });
           }else if (list.canWrite.indexOf(this.currentUser.email) > -1) {
              list.canWrite[list.canWrite.indexOf(this.currentUser.email)] = email;
-            this.afs.collection("lists").doc(list.id).update({ canWrite: list.canWrite });
+            await this.afs.collection("lists").doc(list.id).update({ canWrite: list.canWrite });
           }else if (list.canRead.indexOf(this.currentUser.email) > -1 ){
             list.canRead[list.canRead.indexOf(this.currentUser.email)] = email;
-            this.afs.collection("lists").doc(list.id).update({ canRead:  list.canRead});
+             await this.afs.collection("lists").doc(list.id).update({ canRead:  list.canRead});
           }
         }
-       );
 
       await this.currentUser.updateEmail(email);
-    
+      
       this.modalController.dismiss();
       this.toastService.presentToastSuccess(
         "Courriel modifié avec succès."
