@@ -53,7 +53,12 @@ export class ListDetailsPage implements OnInit {
         .collection("todos", (ref) => ref.orderBy("timestamp", "asc"));
       this.todosObservable = this.todosCollection.valueChanges();
       this.todosObservable.subscribe((todos) => {
-        this.list.todos.filter(todo => {return todos.find((x) => x.id === todo.id)});
+        this.list.todos.forEach(todo => {
+          if (todos.find((x) => x.id === todo.id) === undefined ){
+            this.list.todos.splice(this.list.todos.indexOf(todo),1)
+          }
+          }
+        );
         todos.forEach((todo) => {
           const todoInList = this.list.todos.find((x) => x.id === todo.id);
           if (todoInList === undefined) {

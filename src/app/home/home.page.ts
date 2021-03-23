@@ -52,6 +52,7 @@ export class HomePage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.lists = [];
     this.isNative = Capacitor.isNative;
     this.getDarkMode().then(() => {
       console.log("darkMode : " + this.darkMode);
@@ -98,9 +99,28 @@ this.ResetListObservable();
           element.todos = todos;
         });
       });
-      this.lists = lists.filter((list) => {
-        return list.owner === user.email || list.canRead.indexOf(user.email) !== -1 || list.canWrite.indexOf(user.email) !== -1;
-      });
+      this.lists.forEach(list => {
+        if (lists.find((x) => x.id === list.id) === undefined ){
+          this.lists.splice(this.lists.indexOf(list),1)
+        }
+        }
+      );
+      lists.forEach(list => {
+        const listInLists = this.lists.find((x) => x.id === list.id);
+          if (listInLists === undefined) {
+            this.lists.push(list);
+          } else {
+            listInLists.name = list.name;
+            listInLists.timestamp = list.timestamp;
+            listInLists.canRead = list.canWrite;
+            listInLists.colour = list.colour;
+            listInLists.canWrite = list.canWrite;
+            listInLists.todos = list.todos;
+          }
+        }
+      );
+
+  
       this.listsBackup = [...this.lists];
     });
   }
