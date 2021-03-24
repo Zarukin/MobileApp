@@ -85,51 +85,24 @@ export class AccountPage implements OnInit {
   }
 
   private async linkWithSocial(social: string) {
-    // try {
-    //   const obj = { providerId: social };
-    //   Plugins.CapacitorFirebaseAuth.signIn(obj).then((result) => {
-    //     const credential = new firebase.auth.OAuthProvider(social).credential(
-    //       result.idToken
-    //     );
-    //     this.currentUser.linkWithCredential(credential);
-    //     this.fetchConnectedAccount();
-    //     this.loadingService.dismissLoading();
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    //   this.loadingService.dismissLoading();
-
-    //   switch (error.code) {
-    //     case "auth/popup-closed-by-user":
-    //       this.toastService.presentToast("La connexion a été annulée.");
-    //       console.log(
-    //         "Fenêtre fermée. Connexion OAuth annulée par l'utilisateur."
-    //       );
-    //       break;
-    //     default:
-    //       this.toastService.presentToastError(error.message);
-    //       console.log(error.code);
-    //       break;
-    //   }
-    // }
     try {
-      NativeLinking.nativeLinkWith({ providerId: "google.com" });
-      // let provider = null;
-      // this.loadingService.presentLoading("En attente…");
-      // if (social === "google.com") {
-      //   provider = new firebase.auth.GoogleAuthProvider();
-      //   console.log("Linked with Google");
-      // } else if (social === "github.com") {
-      //   provider = new firebase.auth.GithubAuthProvider();
-      //   console.log("Linked with GitHub");
-      // } else if (social === "twitter.com") {
-      //   provider = new firebase.auth.TwitterAuthProvider();
-      //   console.log("Linked with Twitter");
-      // } else if (social === "facebook.com") {
-      //   provider = new firebase.auth.FacebookAuthProvider();
-      //   console.log("Linked with Facebook");
-      // }
-      // await this.currentUser.linkWithRedirect(provider);
+      // NativeLinking.nativeLinkWith({ providerId: "google.com" });
+      let provider = null;
+      this.loadingService.presentLoading("En attente…");
+      if (social === "google.com") {
+        provider = new firebase.auth.GoogleAuthProvider();
+        console.log("Linked with Google");
+      } else if (social === "github.com") {
+        provider = new firebase.auth.GithubAuthProvider();
+        console.log("Linked with GitHub");
+      } else if (social === "twitter.com") {
+        provider = new firebase.auth.TwitterAuthProvider();
+        console.log("Linked with Twitter");
+      } else if (social === "facebook.com") {
+        provider = new firebase.auth.FacebookAuthProvider();
+        console.log("Linked with Facebook");
+      }
+      await this.currentUser.linkWithPopup(provider);
       await this.fetchConnectedAccount();
       this.loadingService.dismissLoading();
     } catch (error) {
@@ -140,6 +113,18 @@ export class AccountPage implements OnInit {
         case "auth/popup-closed-by-user":
           this.toastService.presentToast("La connexion a été annulée.");
           console.log("Fenêtre fermée. Connexion OAuth annulée par l'utilisateur.");
+          break;
+        case "auth/user-cancelled":
+          this.toastService.presentToast("La connexion a été annulée.");
+          console.log("Connexion annulée. Connexion OAuth annulée par l'utilisateur.");
+          break;
+        case "auth/account-exists-with-different-credential":
+          this.toastService.presentToastError("Le courriel est déjà utilisé par un autre service.");
+          console.log("Le courriel est déjà utilisé par un autre service.");
+          break;
+        case "auth/user-disabled":
+          this.toastService.presentToastError("Ce compte a été désactivé.");
+          console.log("Ce compte a été désactivé.");
           break;
         default:
           this.toastService.presentToastError(error.code);
