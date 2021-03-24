@@ -67,6 +67,8 @@ export class ListDetailsPage implements OnInit {
             todoInList.isDone = todo.isDone;
             todoInList.name = todo.name;
             todoInList.description = todo.description;
+            todoInList.deadline  = todo.deadline;
+            todoInList.timestamp  = todo.timestamp;
           }
         });
       });
